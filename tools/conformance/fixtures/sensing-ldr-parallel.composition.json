@@ -1,0 +1,11 @@
+{
+  "id": "sensing-ldr-parallel",
+  "sources": [{ "kind": "dc", "name": "vcc", "plus": "vcc", "minus": "0", "volts": 5 }],
+  "environments": [{ "name": "env", "node": "lux", "points": [{ "atSeconds": 0, "value": 100 }, { "atSeconds": 0.2, "value": 100 }, { "atSeconds": 1.2, "value": 2 }, { "atSeconds": 2, "value": 2 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "rf", "ports": { "a": "vcc", "b": "vin" }, "spec": { "ohms": 10000 } },
+    { "kind": "ldr", "name": "s", "ports": { "a": "vin", "b": "0", "env": "lux" }, "spec": { "r10Ohms": 12000, "gamma": 0.7, "darkOhms": 1000000, "luxDomain": [1, 100] } },
+    { "kind": "resistor", "name": "rb", "ports": { "a": "vin", "b": "0" }, "spec": { "ohms": 22000 } }
+  ],
+  "analysis": { "stopSeconds": 2, "stepSeconds": 0.001, "reltol": 0.0001 }
+}

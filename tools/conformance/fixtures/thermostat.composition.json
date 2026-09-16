@@ -1,0 +1,15 @@
+{
+  "id": "thermostat",
+  "sources": [
+    { "kind": "dc", "name": "vs", "plus": "vcc", "minus": "0", "volts": 12 },
+    { "kind": "dc", "name": "vr", "plus": "vref", "minus": "0", "volts": 6 }
+  ],
+  "environments": [ { "name": "tenv", "node": "tenv", "points": [ { "atSeconds": 0, "value": 20 }, { "atSeconds": 1, "value": 20 } ] } ],
+  "parts": [
+    { "kind": "ntc", "name": "sn", "ports": { "a": "vcc", "b": "vin", "env": "tenv" }, "spec": { "r0Ohms": 10000, "t0Kelvin": 298.15, "betaKelvin": 3950, "celsiusDomain": [-20, 80] } },
+    { "kind": "resistor", "name": "rf", "ports": { "a": "vin", "b": "0" }, "spec": { "ohms": 10000 } },
+    { "kind": "comparator", "name": "c", "ports": { "inp": "vref", "inn": "vin", "out": "out", "vcc": "vcc" }, "spec": { "gain": 10000, "rOutOhms": 1, "leakOhms": 1000000, "switch": { "rOnOhms": 0.001, "rOffOhms": 1000000000 } } },
+    { "kind": "resistor", "name": "rh", "ports": { "a": "out", "b": "0" }, "spec": { "ohms": 24 } }
+  ],
+  "analysis": { "stopSeconds": 2e-6, "stepSeconds": 1e-6, "reltol": 1e-9 }
+}

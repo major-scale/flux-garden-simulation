@@ -1,0 +1,14 @@
+{
+  "id": "rc-charge-discharge-v1",
+  "notes": "Hand-derived before the first run: tau = R*C = 1 ms. Charge 0 -> 5 V from the edge midpoint 1.005 ms; at 11.005 ms the capacitor holds 5*(1 - exp(-10)) = 4.999773 V and discharges to 0 with the same tau. Discharge current peaks at -5 mA (out of plus). Energy: the source delivers C*V^2 = 25 uJ; half is dissipated while charging and the stored 12.5 uJ is dissipated while discharging.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-series", "kind": "kcl", "into": ["r.current"], "out": ["c.current"], "tolRel": 1e-6 },
+    { "id": "ohm-r", "kind": "ohm", "part": "r", "tolRel": 1e-4 },
+    { "id": "capacitor-law-and-energy", "kind": "storage-law", "part": "c", "window": [0.0005, 0.02], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "charge-analytic", "kind": "reference", "observable": "c.vplus", "model": "first-order-step", "startAtSeconds": 0.001005, "from": 0, "to": 5, "tauSeconds": 0.001, "window": [0.0012, 0.011], "tolRel": 0.001 },
+    { "id": "discharge-analytic", "kind": "reference", "observable": "c.vplus", "model": "first-order-step", "startAtSeconds": 0.011005, "from": 4.999773, "to": 0, "tauSeconds": 0.001, "window": [0.0112, 0.02], "tolRel": 0.001 },
+    { "id": "discharge-reverses-current", "kind": "trough", "observable": "c.current", "window": [0.011, 0.0125], "max": -0.004 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 }
+  ]
+}

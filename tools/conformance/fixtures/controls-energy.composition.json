@@ -1,0 +1,83 @@
+{
+ "id": "controls-energy",
+ "sources": [
+  {
+   "kind": "dc",
+   "name": "vdd",
+   "plus": "nd",
+   "minus": "0",
+   "volts": 9
+  }
+ ],
+ "parts": [
+  {
+   "kind": "switch",
+   "name": "t",
+   "ports": {
+    "a": "nd",
+    "b": "na"
+   },
+   "spec": {
+    "rOnOhms": 0.05,
+    "rOffOhms": 1000000000.0
+   },
+   "programme": {
+    "closeAtSeconds": 0.005,
+    "openAtSeconds": null,
+    "edgeSeconds": 0.0005
+   }
+  },
+  {
+   "kind": "pot",
+   "name": "p",
+   "ports": {
+    "a": "na",
+    "w": "nw",
+    "b": "0"
+   },
+   "spec": {
+    "totalOhms": 1000,
+    "wiperFraction": 0.5,
+    "endOhms": 0.1,
+    "contactOhms": 0.5
+   }
+  },
+  {
+   "kind": "resistor",
+   "name": "rs",
+   "ports": {
+    "a": "nw",
+    "b": "nl"
+   },
+   "spec": {
+    "ohms": 270
+   }
+  },
+  {
+   "kind": "led",
+   "name": "l",
+   "ports": {
+    "anode": "nl",
+    "cathode": "0"
+   },
+   "spec": {
+    "part": {
+     "is": 1e-20,
+     "n": 2,
+     "rs": 1,
+     "cjo": 0,
+     "tt": 0,
+     "bv": 5,
+     "ibv": 1e-06
+    },
+    "referenceAmps": 0.02,
+    "maxForwardAmps": 0.03
+   }
+  }
+ ],
+ "analysis": {
+  "stopSeconds": 0.02,
+  "stepSeconds": 2e-05,
+  "reltol": 0.0001
+ }
+}

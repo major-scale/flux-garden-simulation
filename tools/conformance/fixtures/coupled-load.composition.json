@@ -1,0 +1,10 @@
+{
+  "id": "coupled-load",
+  "sources": [{ "kind": "pwl", "name": "vs", "plus": "vin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.0001, "value": 0 }, { "atSeconds": 0.000101, "value": 1 }, { "atSeconds": 0.003, "value": 1 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "r1", "ports": { "a": "vin", "b": "p" }, "spec": { "ohms": 10 } },
+    { "kind": "coupled", "name": "t", "ports": { "plus1": "p", "minus1": "0", "plus2": "s", "minus2": "0" }, "spec": { "primaryHenries": 0.01, "secondaryHenries": 0.01, "coupling": 0.9 } },
+    { "kind": "resistor", "name": "r2", "ports": { "a": "s", "b": "0" }, "spec": { "ohms": 100 } }
+  ],
+  "analysis": { "stopSeconds": 0.003, "stepSeconds": 1e-6, "reltol": 1e-5 }
+}

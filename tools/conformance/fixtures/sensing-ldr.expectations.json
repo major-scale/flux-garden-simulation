@@ -1,0 +1,14 @@
+{
+  "id": "sensing-ldr-dusk-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "ldr-law", "kind": "sensor-law", "part": "s", "tolRel": 1e-3 },
+    { "id": "comparator-decides", "kind": "comparator", "part": "c" },
+    { "id": "kcl-output", "kind": "kcl", "into": ["rs.current"], "out": ["l.current"], "tolRel": 1e-6 },
+    { "id": "led-law", "kind": "diode-law", "part": "l", "tolRel": 2e-3 },
+    { "id": "led-limit", "kind": "bounds", "observable": "l.current", "min": -1e-9, "max": 0.03 },
+    { "id": "off-in-light", "kind": "state", "at": 0.5, "observable": "l.current", "op": "lt", "value": 1e-9 },
+    { "id": "on-in-dark", "kind": "state", "at": 1.8, "observable": "l.current", "op": "gt", "value": 0.005 },
+    { "id": "switches-on-during-dusk", "kind": "switching", "part": "c", "direction": "low->high", "window": [0.2, 1.2] }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "coupled-load-v1",
+  "notes": "Two linear windings, L1 = L2 = 10 mH, k = 0.9 (M = 9 mH), dots at plus1/plus2; primary driven through 10 ohm by a 1 V step, secondary loaded by 100 ohm. Hand estimate before the first run: at the step di1/dt = V*L2/(L1*L2 - M^2) = 526 A/s and di2/dt = -(M/L2)*di1/dt, so the current INTO plus2 goes NEGATIVE (the secondary drives current out of its dotted end into the load). Polarity is the sign; the 1 mA bound is a loading floor (an open secondary stays near zero). Energy: the load dissipates what the coupling transfers; the account must close.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-primary", "kind": "kcl", "into": ["r1.current"], "out": ["t.current1"], "tolRel": 1e-6 },
+    { "id": "kcl-secondary", "kind": "kcl", "into": ["t.current2", "r2.current"], "out": [], "tolRel": 1e-6 },
+    { "id": "coupled-law-and-energy", "kind": "storage-law", "part": "t", "window": [0.00005, 0.003], "tolRel": 0.002, "tolEnergyRel": 0.002 },
+    { "id": "lenz-loading", "kind": "trough", "observable": "t.current2", "window": [0.0001, 0.001], "max": -0.001 },
+    { "id": "dot-polarity", "kind": "peak", "observable": "node:s", "window": [0.0001, 0.001], "min": 0.1 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "rc-charge-discharge",
+  "sources": [{ "kind": "pwl", "name": "vs", "plus": "vin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.001, "value": 0 }, { "atSeconds": 0.00101, "value": 5 }, { "atSeconds": 0.011, "value": 5 }, { "atSeconds": 0.01101, "value": 0 }, { "atSeconds": 0.02, "value": 0 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "r", "ports": { "a": "vin", "b": "vc" }, "spec": { "ohms": 1000 } },
+    { "kind": "capacitor", "name": "c", "ports": { "plus": "vc", "minus": "0" }, "spec": { "farads": 1e-6 } }
+  ],
+  "analysis": { "stopSeconds": 0.02, "stepSeconds": 5e-6, "reltol": 1e-5 }
+}

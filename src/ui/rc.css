@@ -1,0 +1,412 @@
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#e4eaf1;background:#101822;font-synthesis:none}*{box-sizing:border-box}body{margin:0}main{max-width:1260px;margin:auto;padding:28px}header{display:flex;justify-content:space-between;color:#8399ad;font-size:12px;letter-spacing:.08em}a{color:#8cd5cd}h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.04em;margin:8px 0 12px}h2{font-size:17px;font-weight:600;margin:0 0 18px}.intro{padding:40px 0 28px;max-width:740px}.intro p{line-height:1.7;color:#aebdcd}.eyebrow{font-size:11px;letter-spacing:.2em;color:#82d7c8!important}.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px}aside,section.instrument,.trace,article>section,details{border:1px solid #304051;background:#15212d;border-radius:14px;padding:22px}aside{align-self:start}label{display:block;font-size:13px;color:#bac8d6;margin:16px 0}input{display:block;width:100%;padding:10px;margin-top:8px;border:1px solid #415568;border-radius:7px;background:#0c1722;color:#efffff;font:inherit}button,.file{font:inherit;font-size:13px;padding:10px 13px;color:#e0edf7;background:#24384a;border:1px solid #456078;border-radius:7px;cursor:pointer}button:hover,.file:hover{background:#35516a}button[aria-pressed=true],#play,button[type=submit]{background:#9bdfcf;color:#112b2d;border-color:#9bdfcf}button[type=submit]{width:100%;margin-top:8px}.hint,details p{font-size:12px;line-height:1.6;color:#99afc2}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.file{margin:0}.file input{max-width:175px;font-size:11px}.transport{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#clock{font-size:12px;color:#a8bbce}.mode{display:flex;gap:8px;margin-top:18px}article>section{margin-top:18px}#headline{display:flex;justify-content:space-between;gap:20px}small{display:block;letter-spacing:.1em;font-size:10px;color:#8eabc1}strong{display:block;font-size:29px;color:#b1f2dd;margin-top:5px}em{font-size:17px;font-style:normal;color:#9eb5c8}svg{display:block;width:100%;height:auto;overflow:visible}svg text{fill:#b8cbdc;font-size:13px;font-family:ui-monospace,monospace}.wire,.symbol{stroke:#86b9d3;stroke-width:3;fill:none}.symbol{stroke:#a9e7d8}.svg-hint{font-size:11px;fill:#819db3}#trace .axis{stroke:#597184;fill:none}#trace .zero{stroke:#415666;stroke-dasharray:3 5}#trace polyline{stroke:#a9edce;stroke-width:2.5;fill:none}#trace circle{fill:#defff1}#trace text{font-size:11px}.quantity{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #2a3a49;font-size:13px}.quantity b{font-variant-numeric:tabular-nums;text-align:right}.balanced{color:#9bdcc3;font-size:12px}.failed,#notice{color:#ffbc8b;font-size:12px;line-height:1.6}details{margin-top:18px;font-size:13px}summary{cursor:pointer}@media(max-width:760px){main{padding:18px}.layout{grid-template-columns:1fr}aside{order:2}.intro{padding-top:22px}header span{display:none}article>section{padding:16px}strong{font-size:22px}}
+
+/* The shared terrace stage, in the RC page's own frame. */
+#stage { position: relative; height: 42vh; min-height: 320px; border: 1px solid #223; border-radius: 8px;
+         overflow: hidden; background: #0d1117; margin: 4px 0 10px; }
+#stage3d { position: absolute; inset: 0; }
+#stage3d canvas { display: block; width: 100% !important; height: 100% !important; }
+#stagelabels { position: absolute; inset: 0; pointer-events: none; }
+#stagelabels .plabel { position: absolute; transform: translate(-50%,-100%); white-space: pre;
+  font: 10.5px/1.25 ui-monospace, Menlo, monospace; color: #dbe3ec;
+  text-shadow: 0 0 4px #000, 0 0 8px #000; text-align: center; }
+#stagelabels .plabel.ref { color: #b9c2cc; }
+#stagelabels .plabel.store { color: #e8c583; }
+#stagelegend { position: absolute; left: 0; right: 0; bottom: 0; padding: 6px 9px;
+  background: rgba(9,13,18,.86); font-size: 10.5px; line-height: 1.45; color: #aab4bf; }
+#stagelegend b { color: #dbe3ec; }
+
+/* Legend stays outside the drawing; quantities must remain visible. */
+#rc-app #stagelegend { position: static; margin-top: 12px; border-radius: 8px; }
+
+/* Scope page typography so the shared bench stylesheet cannot shrink these controls. */
+#rc-app h1 { font-size: clamp(28px,3vw,40px); line-height: 1.15; margin: 8px 0 12px; }
+#rc-app .intro { padding: 24px 0 20px; }
+#rc-app input[type=number] { width: 100%; padding: 10px; font-size: 14px; }
+#rc-app #stage { height: 56vh; min-height: 400px; }
+#rc-app #scale-summary { font-size: 13px; line-height: 1.65; color: #b8cbd9; }
+#rc-app #encoding-notes { padding: 12px 16px; margin-top: 10px; }
+#rc-app #encoding-notes summary { font-size: 13px; color: #b8cbd9; }
+#rc-app #stagelegend { font-size: 12px; line-height: 1.65; background: transparent; padding: 0; }
+@media(max-width:760px) { #rc-app #stage { min-height: 360px; height: 52vh; } }
+
+#rc-app #gauge-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 14px 0; }
+#rc-app .gauge-card { padding: 14px 16px; border: 1px solid #415365; border-radius: 10px; background: #14202b; }
+#rc-app .gauge-card h3 { margin: 0 0 8px; font: 600 14px/1.4 system-ui,sans-serif; color: #e8c583; }
+#rc-app .gauge-card p { margin: 0; white-space: pre-line; font: 13px/1.7 system-ui,sans-serif; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+#rc-app .gauge-card .gauge-extra { margin-top: 8px; color: #a8c2d6; }
+@media(max-width:760px) { #rc-app #gauge-cards { grid-template-columns: 1fr; } }
+
+/* ---- GC1: build it from plates ------------------------------------------ */
+#geo { margin-top: 14px; border-top: 1px solid #223; padding-top: 12px; }
+#geo h2 { font-size: 13px; letter-spacing: .04em; margin: 0 0 6px; }
+#geo .switch { display: flex; align-items: center; gap: 8px; margin: 8px 0; font-size: 13px; }
+#geo .switch input { width: auto; }
+#geo-fields label { display: block; margin: 8px 0; font-size: 12px; }
+#geo-fields input[type=range] { width: 100%; }
+#geo-apply { margin-top: 6px; }
+.georead { margin-top: 10px; font: 11.5px/1.55 ui-monospace, Menlo, monospace; }
+.georead .ok { color: #b8c4d0; }
+.georead .bad { color: #e5787d; border-left: 3px solid #e5787d; padding-left: 8px; }
+.georead .dim { color: #7d8792; }
+#stagelabels .plabel.plates { color: #f0a48f; }
+
+/* ---- predict-then-run ---------------------------------------------------- */
+.predict { margin: 18px 0; padding: 14px 16px; border: 1px solid #2c3b4a; border-radius: 8px;
+           background: #10202b; }
+.predict h2 { margin: 0 0 4px; font-size: 15px; }
+.predict input[type=range] { width: 100%; margin: 10px 0 6px; }
+.predictrow { display: flex; align-items: center; gap: 12px; }
+#predict-value { font: 15px ui-monospace, Menlo, monospace; color: #8fd6c4; min-width: 100px; }
+#predict-result { margin-top: 10px; font-size: 13px; }
+#predict-result .predicted b { color: #dbe3ec; }
+#predict-result .dim { color: #97a3ae; margin-top: 5px; line-height: 1.55; }
+svg .guessline { stroke: #8fd6c4; stroke-width: 1.4; stroke-dasharray: 5 4; }
+svg .guesslab  { fill: #8fd6c4; font: 10px ui-monospace, monospace; }
+svg .tauline   { stroke: #6d7a86; stroke-width: 1; stroke-dasharray: 2 4; }
+svg .taulab    { fill: #97a3ae; font: 10px ui-monospace, monospace; }
+svg .truthline { stroke: #f0c674; stroke-width: 2.2; }
+svg .truthdot  { fill: #f0c674; }
+
+/* Astra visual pass: the object and its actions lead; precision is inspectable. */
+#rc-app { max-width: 1600px; padding: 20px 28px; }
+#rc-app .intro { padding: 12px 0 14px; max-width: none; }
+#rc-app .intro h1 { font-size: 30px; margin: 4px 0; }
+#rc-app .intro p { margin: 5px 0; font-size: 13px; }
+#rc-app .intro .eyebrow { display: none; }
+#rc-app .layout { grid-template-columns: minmax(0,1fr) 260px; gap: 20px; }
+#rc-app .layout article { grid-column: 1; grid-row: 1; min-width: 0; }
+#rc-app .layout aside { grid-column: 2; grid-row: 1; padding: 18px; }
+#rc-app .circuit-settings { padding: 10px; margin: 8px 0 14px; }
+#rc-app .mode { margin-top: 10px; }
+#rc-app section.instrument { margin-top: 8px; padding: 14px; background: #14212c; }
+#rc-app #stage { height: 48vh; min-height: 330px; background: radial-gradient(ellipse at center,#1b2c39,#0d1117); border: 0; }
+#rc-app #headline strong { font-size: 25px; margin: 2px 0 6px; }
+#rc-app #reset-view { position:absolute; right:12px; top:12px; z-index:3; background:#1d303dcc; font-size:11px; }
+#rc-app .orbit-hint { position:absolute; right:12px; top:52px; z-index:3; color:#94adbe; font-size:11px; pointer-events:none; text-align:right; }
+#rc-app .timing-details { border:0; margin:0 0 0 auto; padding:6px; position:relative; }
+#rc-app .timing-details[open] #clock { display:block; position:absolute; z-index:4; right:0; width:280px; padding:12px; background:#14212c; }
+#rc-app #gauge-cards { margin:8px 0; gap:8px; }
+#rc-app .gauge-card { padding:10px 12px; }
+#rc-app .gauge-card h3 { font-size:11px; margin-bottom:3px; }
+#rc-app .gauge-card p { font-size:11px; line-height:1.5; }
+#rc-app #stagelabels .plabel { font-family:system-ui,sans-serif; font-size:11px; }
+#rc-app #stagelabels .plabel.plates { background:#10202bd9; border:1px solid #547084; border-radius:6px; padding:6px 10px; color:#d6e6ed; }
+#rc-app input[type=range] { accent-color:#99dfcf; padding:0; cursor:ew-resize; }
+#rc-app aside .actions { margin-top:16px; }
+#rc-app #geo details { padding:10px; }
+@media(max-width:800px) {
+ #rc-app { padding:14px; } #rc-app .layout { grid-template-columns:1fr; }
+ #rc-app .layout aside { grid-column:1; grid-row:2; } #rc-app #stage { height:45vh; min-height:300px; }
+ #rc-app .intro h1 { font-size:25px; }
+}
+
+/* Labels are RANKED, not hidden: the plate label is the subject and the rest are
+   quieter. Hiding them left the circuit unreadable — Astra's finding. */
+#rc-app:has(#geo-on:checked) #stagelabels .plabel:not(.plates) { opacity:.72; font-size:10px; }
+
+#rc-app.plate-closeup #stagelabels .plabel:not(.plates) { opacity:.72; font-size:10px; }
+
+#rc-app #stage[hidden] { display:none; }
+
+/* Spatial composition: one stage, enough room to inhabit it. */
+#rc-app .intro { padding:6px 0 8px; }
+#rc-app .intro h1 { font-size:26px; }
+#rc-app #stage { height:70vh; min-height:520px; }
+#rc-app.plate-closeup #stagelabels .plabel:not(.plates) { opacity:1; font-size:11px; }
+#rc-app #stagelabels .plabel.component { color:#f6c98b; font-weight:600; }
+#rc-app #stagelabels .plabel.axis { color:#9cb9c9; font-size:10px; }
+@media(max-width:800px) { #rc-app #stage { height:60vh; min-height:430px; } }
+
+#rc-app #stagelabels .plabel.plates { left:auto!important; top:auto!important; right:12px; bottom:10px; transform:none; font-size:10px; pointer-events:none; }
+
+#rc-app #flow-readout { color:#c6f7e7; font-size:13px; padding:8px 12px; margin:4px 0 8px; background:#203c40; border-left:3px solid #8ce1bc; border-radius:5px; font-variant-numeric:tabular-nums; }
+
+/* Circuit action stays attached to the world; secondary instruments unfold on demand. */
+#rc-app .scene-switch { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:14px 0 8px; }
+#rc-app .scene-switch > span { font-size:11px; letter-spacing:.08em; color:#90abae; }
+#rc-app .scene-switch #scene-time { margin-left:auto; letter-spacing:0; font-variant-numeric:tabular-nums; }
+#rc-app .scene-switch button { border-radius:6px; background:#20313e; color:#b4c9cf; border:1px solid #425866; padding:10px 15px; }
+#rc-app .scene-switch button[aria-pressed=true] { background:#b7eddb; color:#173b35; border-color:#b7eddb; box-shadow:0 0 16px #8de5cc18; }
+#rc-app details > summary { font-size:13px; color:#b9ced5; }
+#rc-app details[open] > summary { margin-bottom:18px; }
+
+#rc-app #graphics-status { padding:14px; border:1px solid #c79a62; border-radius:8px; color:#f5d8ad; line-height:1.5; }
+#rc-app #graphics-status button { margin-top:10px; }
+#rc-app.graphics-unavailable #stage { display:none; }
+
+#rc-app #plate-charge { margin:10px 0; padding:14px 16px; border:1px solid #344956; border-radius:10px; background:#182833; }
+#rc-app .charge-heading { display:flex; justify-content:space-between; gap:12px; margin-bottom:12px; color:#cadbdf; font-size:10px; letter-spacing:.08em; }
+#rc-app .charge-heading span:last-child { color:#92aab4; letter-spacing:0; }
+#rc-app .charge-row { display:grid; grid-template-columns:80px minmax(60px,1fr) 100px; gap:12px; align-items:center; margin:10px 0; font-size:12px; color:#bacbd2; }
+#rc-app .charge-row output { text-align:right; font-variant-numeric:tabular-nums; }
+#rc-app .charge-track { height:10px; border-radius:3px; background:#0d1b24; overflow:hidden; }
+#rc-app .charge-light { height:100%; background:repeating-linear-gradient(90deg,currentColor 0,currentColor 5px,transparent 5px,transparent 8px); }
+#rc-app [data-sign=positive] { color:#ffa68f; }
+#rc-app [data-sign=negative] { color:#8bc9ff; }
+#rc-app [data-sign=zero] { color:#91a5af; }
+#rc-app .charge-explanation { background:none; border:0; padding:0; margin:10px 0 0; color:#9cb3be; font-size:11px; line-height:1.5; }
+#rc-app .charge-explanation summary { font-size:11px; }
+
+/* Optional microscopic window; the spatial world remains the primary view. */
+#rc-app .resistor-lens { margin:10px 0; padding:0; border:1px solid #715a45; border-radius:10px; overflow:hidden; background:#14222d; }
+#rc-app .resistor-lens > summary { padding:16px; color:#e8c296; cursor:pointer; }
+#rc-app .resistor-lens > summary span { margin-left:12px; font-size:11px; color:#a7bac4; }
+#rc-app .resistor-lens[open] > summary { margin-bottom:0; border-bottom:1px solid #43505a; }
+#rc-app .resistor-lens-content { padding:18px; }
+#rc-app .resistor-lens-title { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+#rc-app .resistor-lens-title p { font-size:9px; color:#b29675; letter-spacing:.14em; margin:0 0 8px; }
+#rc-app .resistor-lens-title h3 { font-size:22px; color:#efe4d4; margin:0; }
+#rc-app .lens-state { color:#a9d5c8; font-size:11px; }
+#rc-app .lens-story { color:#bdcdd4; font-size:12px; line-height:1.6; max-width:740px; }
+#rc-app .lens-readings { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:16px 0; }
+#rc-app .lens-readings > div { background:#0d1a23; border-radius:7px; padding:12px; font-size:11px; color:#b0c4d0; }
+#rc-app .lens-readings output { display:block; color:#f4d1a5; font-size:21px; margin:6px 0; font-variant-numeric:tabular-nums; }
+#rc-app .lens-readings small { font-size:9px; line-height:1.4; display:block; }
+#rc-app .lens-directions { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:8px 0 12px; font-size:11px; }
+#rc-app .lens-conventional { color:#a9ead2; } #rc-app .lens-electrons { color:#89d3f5; }
+#rc-app .resistor-lens canvas { display:block; width:100%; aspect-ratio:960/330; border-radius:8px; }
+#rc-app .lens-power-row { display:flex; align-items:center; gap:12px; margin:16px 0; font-size:10px; color:#c7b49e; }
+#rc-app .lens-power-track { flex:1; height:7px; background:#0b151d; border-radius:4px; overflow:hidden; }
+#rc-app .lens-power-track > div { height:100%; background:linear-gradient(90deg,#9e754d,#f9bc73); }
+#rc-app .lens-caption,#rc-app .lens-limits { font-size:11px; color:#9fb6c2; line-height:1.6; }
+#rc-app .lens-limits { border:0; padding:0; background:none; margin:12px 0 0; }
+@media(max-width:600px) { #rc-app .resistor-lens > summary span { display:block; margin:6px 0 0 16px; } #rc-app .resistor-lens-content { padding:12px; } #rc-app .lens-readings { gap:4px; } #rc-app .lens-readings > div { padding:8px; } #rc-app .lens-readings output { font-size:16px; } #rc-app .lens-power-row { flex-wrap:wrap; } }
+
+/* Inspect the component beside the same circuit, with no second experiment. */
+#rc-app #circuit-world { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; }
+#rc-app #circuit-world.inspecting { grid-template-columns:minmax(0,1.2fr) minmax(300px,1fr); }
+#rc-app #resistor-interior[hidden] { display:none; }
+#rc-app #inspect-resistor { position:absolute; bottom:56px; left:12px; z-index:4; border:1px solid #ba9260; background:#493928; color:#ffe2b7; padding:10px 14px; border-radius:7px; cursor:pointer; }
+#rc-app .resistor-key { position:absolute; left:12px; bottom:12px; z-index:3; color:#aac5d0; font-size:10px; line-height:1.5; pointer-events:none; }
+#rc-app #circuit-world.inspecting #stage { min-height:480px; height:68vh; }
+#rc-app #circuit-world.inspecting .resistor-lens { margin:0; max-height:68vh; overflow:auto; }
+#rc-app #circuit-world.inspecting .lens-readings { grid-template-columns:1fr; }
+#rc-app #circuit-world.inspecting .lens-readings > div { display:grid; grid-template-columns:1fr 1fr; gap:3px; padding:8px; }
+#rc-app #circuit-world.inspecting .lens-readings output { margin:0; text-align:right; font-size:17px; }
+#rc-app #circuit-world.inspecting .lens-readings small { grid-column:1/-1; }
+#rc-app.graphics-unavailable #inspect-resistor { position:static; margin:10px 0; }
+#rc-app.graphics-unavailable #circuit-world.inspecting { grid-template-columns:1fr; }
+@media(max-width:950px) { #rc-app #circuit-world.inspecting { grid-template-columns:1fr; } #rc-app #circuit-world.inspecting .resistor-lens { max-height:none; } }
+
+#rc-app .resistor-lens canvas[hidden] { display:none; }
+
+#rc-app .charge-view-toggle { display:flex; align-items:center; gap:6px; font-size:11px; color:#b4c9cf; cursor:pointer; }
+#rc-app .charge-view-toggle input { width:auto; margin:0; }
+
+#rc-app .charge-view-toggle[hidden] { display:none; }
+
+/* The damping control sits with the source selector: both change the circuit, not the view. */
+#rc-app .damping-group { display:flex; align-items:center; gap:10px; }
+#rc-app .damping-group .row-label { font-size:11px; letter-spacing:.08em; color:#90abae; }
+#rc-app .damping-group #damping { width:150px; margin:0; }
+#rc-app .damping-group input[type=range] { flex:0 0 150px; accent-color:#8ce1bc; }
+#rc-app .damping-group output { font-size:12px; color:#c6f7e7; font-variant-numeric:tabular-nums; }
+
+/* The coil geometry block, matching the plate-geometry block above it. */
+#rc-app #coil-fields { margin: 6px 0 12px; padding: 10px 12px; border: 1px solid #3a4d5e; border-radius: 8px; }
+#rc-app #coil-fields label { margin: 8px 0; }
+#rc-app #coil-readout { margin: 10px 0 0; font-size: 11px; line-height: 1.55; color: #c3b0e8; }
+#rc-app .coil-mode { display: flex; align-items: center; gap: 8px; margin: 14px 0 6px; }
+#rc-app .coil-mode input { width: auto; margin: 0; }
+#rc-app #coil-fields[hidden] { display: none; }
+
+#rc-app #pickup-fields { margin: 6px 0 12px; padding: 10px 12px; border: 1px solid #35564c; border-radius: 8px; }
+#rc-app #pickup-fields label { margin: 8px 0; }
+#rc-app #pickup-readout { margin: 10px 0 0; font-size: 11px; line-height: 1.55; color: #9fe0c6; }
+#rc-app #pickup-fields[hidden] { display: none; }
+#rc-app #pickup-orient { display:block; width:100%; padding:10px; margin-top:8px; border:1px solid #415568;
+  border-radius:7px; background:#0c1722; color:#efffff; font:inherit; }
+#rc-app #stagelabels .plabel.pickup { color: #7fe3c0; }
+
+/* ---- BRINGING THE CIRCUIT ABOVE THE FOLD -------------------------------------------------
+   At 1440x900 the scene began at y=555 and was cut off by the window: the page put a title
+   block, a headline, a status banner, three control rows and a five-line paragraph of standing
+   solver text in front of the thing the page is about. None of that text was wrong; it was
+   simply all above the view. The paragraph moved below the scene, and these trim the rest. */
+#rc-app .intro { padding: 20px 0 14px; }
+#rc-app h1 { font-size: clamp(24px, 2.6vw, 34px); margin: 4px 0 8px; }
+#rc-app .intro p { font-size: 13px; line-height: 1.55; }
+/* The component row and the solver details are controls, not panels: no card around them. */
+#rc-app .component-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin-top: 10px; }
+#rc-app .component-add .hint { margin: 0; }
+#rc-app details.solver-details { margin-top: 8px; padding: 0; border: 0; background: transparent; }
+#rc-app details.solver-details[open] { padding-bottom: 6px; }
+#rc-app details.solver-details label.coil-mode { margin: 8px 0 0; }
+#rc-app #solver-status { margin: 8px 0 6px; }
+#rc-app #solver-notes { margin: 10px 0 0; }
+#rc-app .mode { margin-top: 10px; }
+/* Taller, so the circuit has room once it is reachable. */
+#rc-app #stage { height: 62vh; min-height: 440px; }
+@media(max-height: 860px) { #rc-app #stage { height: 58vh; min-height: 380px; } }
+
+/* ---- BRINGING THE CIRCUIT ABOVE THE FOLD -------------------------------------------------
+   At 1440x900 the scene began at y=555 and was cut off by the window: the page put a title
+   block, a headline, a status banner, three control rows and a five-line paragraph of standing
+   solver text in front of the thing the page is about. None of that text was wrong; it was
+   simply all above the view. The paragraph moved below the scene, and these trim the rest. */
+#rc-app .intro { padding: 20px 0 14px; }
+#rc-app h1 { font-size: clamp(24px, 2.6vw, 34px); margin: 4px 0 8px; }
+#rc-app .intro p { font-size: 13px; line-height: 1.55; }
+/* The component row and the solver details are controls, not panels: no card around them. */
+#rc-app .component-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin-top: 10px; }
+#rc-app .component-add .hint { margin: 0; }
+#rc-app details.solver-details { margin-top: 8px; padding: 0; border: 0; background: transparent; }
+#rc-app details.solver-details label.coil-mode { margin: 8px 0 0; }
+#rc-app #solver-status { margin: 8px 0 6px; }
+#rc-app #solver-notes { margin: 10px 0 0; }
+#rc-app .mode { margin-top: 10px; }
+/* Taller, so the circuit has room once it is reachable. */
+#rc-app #stage { height: 62vh; min-height: 440px; }
+@media(max-height: 860px) { #rc-app #stage { height: 58vh; min-height: 380px; } }
+
+/* ---- THE DEMONSTRATIONS -----------------------------------------------------------------
+   These are the first thing above the scene, because "what does it do" is the question the
+   page is answering. The previous first row was 'Add a diode', which asks the viewer to
+   assemble a circuit before it shows them one. */
+#rc-app .presets { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:4px; }
+#rc-app .preset-lead { font-size:10px; letter-spacing:.16em; color:#82d7c8; }
+#rc-app .presets button { padding:8px 12px; }
+#rc-app .presets button[aria-pressed=true] { background:#9bdfcf; color:#112b2d;
+  border-color:#9bdfcf; }
+#rc-app #preset-blurb { margin:8px 0 0; max-width:74ch; }
+
+/* ---- THE STAGE HAS TO DOMINATE THE FIRST VIEWPORT ---------------------------------------
+   Astra, on the captures: the circuit was pushed to the bottom edge with the top third spent on
+   prose and controls. These trim what sits above the scene; the text is not deleted, it moves
+   into the notes below it, which is where a reader goes for it rather than past it. */
+#rc-app .intro { padding: 12px 0 8px; }
+#rc-app h1 { font-size: clamp(21px, 2.1vw, 28px); margin: 2px 0 6px; }
+#rc-app .intro p { font-size: 12.5px; line-height: 1.5; margin: 0; }
+#rc-app .transport { margin-bottom: 2px; }
+#rc-app section.instrument { padding: 10px 12px; margin-top: 6px; }
+#rc-app .presets { margin-top: 2px; }
+#rc-app .presets button { padding: 6px 10px; }
+#rc-app .preset-sep { width: 1px; height: 20px; background: #33475a; margin: 0 4px; }
+#rc-app #preset-blurb, #rc-app #diode-state { margin: 6px 0 0; font-size: 12px; }
+#rc-app #stage { height: 66vh; min-height: 460px; }
+@media(max-height: 820px) { #rc-app #stage { height: 62vh; min-height: 400px; } }
+
+/* The speed control sits with Run, not in a settings panel: Peter should not have to hunt for
+   the thing that makes the scene watchable. */
+#rc-app .speed { display: inline-flex; align-items: center; gap: 8px; margin-left: 6px; }
+#rc-app .speed label { margin: 0; font-size: 12px; color: #bac8d6; }
+#rc-app .speed input[type=range] { width: 190px; margin: 0; padding: 0; }
+#rc-app .speed output { font-size: 12px; color: #9bdfcf; font-variant-numeric: tabular-nums;
+  min-width: 20ch; }
+
+#rc-app .speed input[type=range]:disabled { opacity: .4; cursor: not-allowed; }
+#rc-app .speed input[type=range]:disabled + output, 
+#rc-app .speed input[type=range]:disabled ~ output { color: #7f93a4; }
+
+/* ---- LIGHT WORKSTATION ----------------------------------------------------------------------
+   Presentation only. One token layer; every override below reads a token, so the page flips
+   together. `html body` outranks the shared style.css `html, body` rule by specificity. */
+:root { --ws-paper:#f5f2ec; --ws-panel:#ffffff; --ws-panel-2:#f0ede6; --ws-line:#d9d4ca; --ws-line-2:#e8e4dc;
+  --ws-ink:#1f2a33; --ws-ink-2:#55636f; --ws-ink-3:#606d79; --ws-accent:#12796a; --ws-accent-soft:#d8efea;
+  --ws-accent-ink:#ffffff; --ws-warm:#9c5710; --ws-warm-soft:#fdf1e4; --ws-pos:#d9553f; --ws-neg:#2f7bd0;
+  --ws-shadow:0 8px 24px rgba(30,40,50,.08), 0 1px 2px rgba(30,40,50,.06); }
+html body { background: var(--ws-paper); color: var(--ws-ink); }
+#rc-app header { color: var(--ws-ink-3); }
+#rc-app header a, #rc-app a { color: var(--ws-accent); }
+#rc-app h1 { color: var(--ws-ink); letter-spacing: -.035em; }
+#rc-app h2 { color: var(--ws-ink); }
+#rc-app .intro p, #rc-app p, #rc-app label { color: var(--ws-ink-2); }
+#rc-app .eyebrow, #rc-app .preset-lead { color: var(--ws-accent) !important; }
+#rc-app aside, #rc-app section.instrument, #rc-app .trace, #rc-app article > section, #rc-app details {
+  background: var(--ws-panel); border: 1px solid var(--ws-line); box-shadow: var(--ws-shadow); }
+#rc-app details { box-shadow: none; }
+#rc-app details > summary, #rc-app .hint, #rc-app details p, #rc-app small { color: var(--ws-ink-2); }
+#rc-app input, #rc-app select { background: var(--ws-panel-2); color: var(--ws-ink); border: 1px solid var(--ws-line); }
+#rc-app input:focus { outline: 2px solid var(--ws-accent-soft); border-color: var(--ws-accent); }
+#rc-app button, #rc-app .file { background: var(--ws-panel); color: var(--ws-ink); border: 1px solid var(--ws-line);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 1px 2px rgba(30,40,50,.06); }
+#rc-app button:hover, #rc-app .file:hover { background: var(--ws-panel-2); border-color: #c9c3b8; }
+#rc-app button[aria-pressed=true], #rc-app #play, #rc-app button[type=submit] {
+  background: var(--ws-accent); color: var(--ws-accent-ink); border-color: var(--ws-accent); box-shadow: none; }
+#rc-app .presets { background: var(--ws-panel-2); border-radius: 9px; padding: 4px; }
+#rc-app .presets button { border-color: transparent; background: transparent; box-shadow: none; }
+#rc-app .presets button:hover { background: var(--ws-panel); }
+#rc-app .presets button[aria-pressed=true] { background: var(--ws-accent); color: var(--ws-accent-ink); }
+#rc-app strong { color: var(--ws-accent); } #rc-app em { color: var(--ws-ink-2); }
+#rc-app .quantity { border-bottom-color: var(--ws-line-2); color: var(--ws-ink); }
+#rc-app .balanced { color: var(--ws-accent); } #rc-app .failed, #rc-app #notice { color: #b4541c; }
+#rc-app #clock, #rc-app .orbit-hint { color: var(--ws-ink-3); }
+#rc-app input[type=range] { accent-color: var(--ws-accent); }
+#rc-app #flow-readout { color: #125f54; background: var(--ws-accent-soft); border-left-color: var(--ws-accent); }
+#rc-app .timing-details[open] #clock { background: var(--ws-panel); border: 1px solid var(--ws-line); box-shadow: var(--ws-shadow); }
+#rc-app #scale-summary, #rc-app #encoding-notes summary, #rc-app #stagelegend { color: var(--ws-ink-2); }
+#rc-app #stagelegend b { color: var(--ws-ink); }
+#rc-app #inspect-resistor { background: var(--ws-warm-soft); color: var(--ws-warm); border-color: #ecd2b4; }
+#rc-app .resistor-key { color: var(--ws-ink-3); }
+/* The stage: a bench under daylight. The canvas is transparent; this gradient is the room. */
+#rc-app #stage { background: linear-gradient(180deg, #e9eef3 0%, #f2f1ed 55%, #f7f5f0 100%);
+  border: 1px solid var(--ws-line); border-radius: 12px; box-shadow: var(--ws-shadow); }
+#rc-app #reset-view, #rc-app #focus-pickup { background: rgba(255,255,255,.85); color: var(--ws-ink); }
+#rc-app #stagelabels .plabel { font-size: 11.5px; line-height: 1.25; padding: 3px 7px 3px 9px; border-radius: 7px;
+  background: rgba(255,255,255,.9); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--ws-line); border-left: 3px solid var(--ws-neg); color: var(--ws-ink);
+  text-shadow: none; letter-spacing: .01em; box-shadow: 0 1px 2px rgba(30,40,50,.08); }
+#rc-app #stagelabels .plabel.node { color: #163c66; }
+#rc-app #stagelabels .plabel.ref { color: var(--ws-ink-2); border-left-color: #8a95a0; }
+#rc-app #stagelabels .plabel.component { color: var(--ws-warm); font-weight: 650; font-size: 12px; border-left-color: var(--ws-warm); }
+#rc-app #stagelabels .plabel.axis { color: var(--ws-ink-3); font-size: 10px; padding: 1px 5px; background: transparent;
+  border: 0; box-shadow: none; }
+#rc-app #stagelabels .plabel.pickup { color: #12634f; border-left-color: #1f9c7c; }
+#rc-app #stagelabels .plabel.plates { background: rgba(255,255,255,.95); border: 1px solid var(--ws-line);
+  border-left: 3px solid var(--ws-pos); color: var(--ws-ink); padding: 6px 10px; }
+#rc-app #stagelabels .plabel.store { color: var(--ws-warm); }
+/* Cards and lenses that carried their own dark fills. */
+#rc-app .gauge-card, #rc-app #plate-charge, #rc-app .resistor-lens, #rc-app #predict-result {
+  background: var(--ws-panel); border-color: var(--ws-line); }
+#rc-app .gauge-card h3, #rc-app .resistor-lens > summary { color: var(--ws-warm); }
+#rc-app .gauge-card .gauge-extra, #rc-app .charge-row, #rc-app .charge-explanation, #rc-app .lens-story,
+#rc-app .lens-caption, #rc-app .lens-limits, #rc-app .lens-readings > div, #rc-app .resistor-lens > summary span { color: var(--ws-ink-2); }
+#rc-app .charge-heading { color: var(--ws-ink); } #rc-app .charge-heading span:last-child { color: var(--ws-ink-3); }
+#rc-app .charge-track, #rc-app .lens-power-track { background: var(--ws-panel-2); }
+#rc-app .lens-readings > div { background: var(--ws-panel-2); }
+#rc-app .lens-readings output { color: var(--ws-warm); }
+#rc-app .resistor-lens-title h3 { color: var(--ws-ink); } #rc-app .resistor-lens-title p { color: var(--ws-warm); }
+#rc-app .lens-state { color: var(--ws-accent); }
+#rc-app #graphics-status { color: #7a4a10; border-color: #e3c59b; background: var(--ws-warm-soft); }
+#rc-app .scene-switch button { background: var(--ws-panel); color: var(--ws-ink-2); border-color: var(--ws-line); }
+#rc-app .scene-switch button[aria-pressed=true] { background: var(--ws-accent); color: var(--ws-accent-ink); border-color: var(--ws-accent); box-shadow: none; }
+#rc-app .scene-switch > span { color: var(--ws-ink-3); }
+#rc-app [data-sign=positive] { color: var(--ws-pos); } #rc-app [data-sign=negative] { color: var(--ws-neg); } #rc-app [data-sign=zero] { color: var(--ws-ink-3); }
+#rc-app svg text, #rc-app #trace text { fill: var(--ws-ink-2); }
+#rc-app .wire, #rc-app .symbol { stroke: #4a6a80; } #rc-app .symbol { stroke: var(--ws-accent); }
+#rc-app #trace .axis { stroke: #b9c2cc; } #rc-app #trace .zero { stroke: #cfd6dc; }
+#rc-app #trace polyline { stroke: var(--ws-accent); } #rc-app #trace circle { fill: var(--ws-accent); }
+#rc-app .georead .ok { color: var(--ws-ink-2); } #rc-app .georead .dim { color: var(--ws-ink-3); }
+#rc-app #predict-value { color: var(--ws-accent); } #rc-app #predict-result .predicted b { color: var(--ws-ink); }
+#rc-app #predict-result .dim { color: var(--ws-ink-3); }
+/* Controls that carried their own dark-theme colours. */
+#rc-app .speed label, #rc-app .charge-view-toggle, #rc-app .damping-group .row-label, #rc-app .scene-switch > span { color: var(--ws-ink-2); }
+#rc-app .speed output, #rc-app .damping-group output { color: var(--ws-accent); }
+#rc-app .damping-group input[type=range] { accent-color: var(--ws-accent); }
+#rc-app #scene-time { color: var(--ws-ink-2); }
+#rc-app .transport summary { color: var(--ws-ink-2); }
+/* ---- THE LAMP PAGE: the same workstation, a different circuit. ---------------------------- */
+#rc-app.lamp-app .readouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 8px 0; }
+#rc-app.lamp-app .readouts div { background: var(--ws-panel-2); border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--ws-ink-2); }
+#rc-app.lamp-app .readouts output { display: block; font: 600 17px/1.2 ui-monospace, Menlo, monospace; color: var(--ws-ink); margin-top: 3px; font-variant-numeric: tabular-nums; }
+#rc-app.lamp-app .readouts .warm output { color: var(--ws-warm); }
+#rc-app.lamp-app .readouts .cool output { color: var(--ws-neg); }
+#rc-app.lamp-app #stage { height: 60vh; min-height: 420px; }
+#rc-app.lamp-app #headline strong { color: var(--ws-warm); }
+#rc-app.lamp-app #stagelabels .plabel.component { max-width: 34ch; white-space: pre-line; }
+#rc-app.lamp-app .stage-fault { margin: 8px 0 0; padding: 10px 14px; border-radius: 8px; background: #fde8e4; border: 1px solid #e8a79b; color: #8a2a17; font-weight: 600; }
+#rc-app #stagelabels .plabel.pin { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; color: var(--ws-ink); background: rgba(255,255,255,.7); padding: 1px 4px; border: 1px solid var(--ws-line); border-radius: 4px; box-shadow: none; }
+#stagelabels.labels-hidden .plabel { display: none !important; }
+#rc-app .labels-toggle { position: absolute; left: 12px; top: 46px; z-index: 3; font-size: 11px; color: var(--ws-ink-2); background: rgba(255,255,255,.85); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--ws-line); cursor: pointer; }
+#rc-app .labels-toggle input { vertical-align: -1px; margin-right: 4px; }
+/* The fan page has no editable circuit: no aside, the instrument takes the whole width. */
+#rc-app.fan-app .layout { grid-template-columns: minmax(0,1fr); }
+#rc-app.fan-app #stage { height: 66vh; min-height: 460px; }
+#rc-app.fan-app .fan-controls { align-items: center; gap: 18px; margin-bottom: 6px; }
+#rc-app.fan-app .fan-controls .speed label { font-size: 13px; color: var(--ws-ink); }
+#rc-app.fan-app .fan-controls .presets { display: inline-flex; align-items: center; gap: 6px; }
+#rc-app.fan-app .values-toggle { left: 92px; }
+#rc-app.fan-app .pending-badge { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: 4; font-size: 12px; font-weight: 600; color: #6b3d00; background: #fff3d6; border: 1px solid #e3b96a; border-radius: 6px; padding: 6px 12px; }
+

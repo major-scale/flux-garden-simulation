@@ -1,0 +1,12 @@
+{
+  "id": "rc-ladder-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-n1", "kind": "kcl", "into": ["r1.current"], "out": ["c1.current", "r2.current"], "tolRel": 1e-6 },
+    { "id": "kcl-n2", "kind": "kcl", "into": ["r2.current"], "out": ["c2.current"], "tolRel": 1e-6 },
+    { "id": "c1-law-and-energy", "kind": "storage-law", "part": "c1", "window": [0.0005, 0.012], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "c2-law-and-energy", "kind": "storage-law", "part": "c2", "window": [0.0005, 0.012], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "c2-charged-at-end", "kind": "state", "at": "end", "observable": "c2.vplus", "op": "near", "value": 5, "tolAbs": 0.05 },
+    { "id": "c1-leads-c2", "kind": "state", "at": 0.002, "observable": "c1.vplus", "op": "gt", "value": 2.5 }
+  ]
+}

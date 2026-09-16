@@ -1,0 +1,10 @@
+{
+  "id": "rl-pair",
+  "sources": [{ "kind": "pwl", "name": "vs", "plus": "vin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.001, "value": 0 }, { "atSeconds": 0.00101, "value": 5 }, { "atSeconds": 0.006, "value": 5 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "r", "ports": { "a": "vin", "b": "n1" }, "spec": { "ohms": 10 } },
+    { "kind": "inductor", "name": "l1", "ports": { "plus": "n1", "minus": "n2" }, "spec": { "henries": 0.004 } },
+    { "kind": "inductor", "name": "l2", "ports": { "plus": "n2", "minus": "0" }, "spec": { "henries": 0.006 } }
+  ],
+  "analysis": { "stopSeconds": 0.006, "stepSeconds": 5e-6, "reltol": 1e-5 }
+}

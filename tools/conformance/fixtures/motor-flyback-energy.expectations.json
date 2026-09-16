@@ -1,0 +1,17 @@
+{
+ "id": "motor-flyback-energy-v1",
+ "notes": "Electronics v1 energy coverage: the ACCEPTED composition of motor-switch-flyback (byte-frozen fixture untouched), re-used under a new id so the network energy account runs on these part kinds. motor accounting: winding R*i^2 and viscous b*w^2 dissipated, constant-torque load work converted, 1/2 L i^2 + 1/2 J w^2 stored; switch and freewheel diode dissipative.",
+ "checks": [
+  {
+   "id": "connected",
+   "kind": "connectivity",
+   "danglingPorts": "warn"
+  },
+  {
+   "id": "energy-account",
+   "kind": "energy-balance",
+   "tolRel": 0.001,
+   "tolStorageRel": 0.02
+  }
+ ]
+}

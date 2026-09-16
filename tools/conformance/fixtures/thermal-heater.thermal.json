@@ -1,0 +1,9 @@
+{
+  "id": "thermal-heater-thermal",
+  "bodies": [
+    { "id": "heater-body", "heatCapacityJPerK": 2, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.5 }
+  ],
+  "routes": [
+    { "source": "rh", "receiver": "heater-body" }
+  ]
+}

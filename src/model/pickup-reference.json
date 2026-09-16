@@ -1,0 +1,91 @@
+{
+ "coil": {
+  "turns": 20,
+  "radius": 0.04,
+  "length": 0.1,
+  "wireRadius": 0.0008
+ },
+ "shippingDefaultRadius": 0.03,
+ "samples": [
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.0,
+   "mutualH": 5.717586332695735e-07
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.02,
+   "mutualH": 5.442644222276652e-07
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.03,
+   "mutualH": 5.040809589303736e-07
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.05,
+   "mutualH": 3.311651637201999e-07
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.06,
+   "mutualH": 2.257444157437886e-07
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.1,
+   "mutualH": 5.774280279214874e-08
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.15,
+   "mutualH": 1.734859625595629e-08
+  },
+  {
+   "pickupRadius": 0.03,
+   "separation": 0.2,
+   "mutualH": 7.26715964935147e-09
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.0,
+   "mutualH": 1.3986057513911826e-07
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.02,
+   "mutualH": 1.318735723321056e-07
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.03,
+   "mutualH": 1.2079088183784545e-07
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.05,
+   "mutualH": 8.255796848319939e-08
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.06,
+   "mutualH": 6.08655914893855e-08
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.1,
+   "mutualH": 1.5917458202393838e-08
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.15,
+   "mutualH": 4.55053637961648e-09
+  },
+  {
+   "pickupRadius": 0.015,
+   "separation": 0.2,
+   "mutualH": 1.866069497102501e-09
+  }
+ ]
+}

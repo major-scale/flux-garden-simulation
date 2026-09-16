@@ -1,0 +1,68 @@
+{
+  "id": "temperature-motor-trial",
+  "sources": [
+    { "kind": "dc", "name": "vdd", "plus": "vdd", "minus": "0", "volts": 6 }
+  ],
+  "environments": [
+    {
+      "name": "temp",
+      "node": "temperature",
+      "points": [
+        { "atSeconds": 0, "value": 10 },
+        { "atSeconds": 0.1, "value": 10 },
+        { "atSeconds": 0.3, "value": 45 },
+        { "atSeconds": 0.7, "value": 45 },
+        { "atSeconds": 0.9, "value": 10 },
+        { "atSeconds": 1.2, "value": 10 }
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "kind": "ntc",
+      "name": "s",
+      "ports": { "a": "vdd", "b": "sense", "env": "temperature" },
+      "spec": { "r0Ohms": 10000, "t0Kelvin": 298.15, "betaKelvin": 3950, "celsiusDomain": [-20, 80] }
+    },
+    {
+      "kind": "resistor",
+      "name": "rb",
+      "ports": { "a": "sense", "b": "0" },
+      "spec": { "ohms": 10000 }
+    },
+    {
+      "kind": "pot",
+      "name": "p",
+      "ports": { "a": "vdd", "w": "reference", "b": "0" },
+      "spec": { "totalOhms": 10000, "wiperFraction": 0.5, "endOhms": 0.1, "contactOhms": 0.5 }
+    },
+    {
+      "kind": "comparator",
+      "name": "c",
+      "ports": { "inp": "sense", "inn": "reference", "out": "gate", "vcc": "vdd" },
+      "spec": { "gain": 10000, "rOutOhms": 50, "leakOhms": 1000000, "switch": { "rOnOhms": 0.001, "rOffOhms": 1000000000 } }
+    },
+    {
+      "kind": "mosfet",
+      "name": "q",
+      "ports": { "drain": "motorlow", "gate": "gate", "source": "0" },
+      "spec": { "vto": 2, "kp": 0.00002, "lambda": 0.01, "tox": 0.0000001, "cgso": 0.000000001, "cgdo": 0.000000001, "widthM": 0.01, "lengthM": 0.000001 }
+    },
+    {
+      "kind": "motor",
+      "name": "m",
+      "ports": { "plus": "vdd", "minus": "motorlow" },
+      "spec": {
+        "motor": { "resistanceOhms": 2, "inductanceHenries": 0.005, "kVsPerRad": 0.3 },
+        "load": { "inertiaKgM2": 0.00066, "viscousNmS": 0.002, "constantTorqueNm": 0 }
+      }
+    },
+    {
+      "kind": "diode",
+      "name": "fw",
+      "ports": { "anode": "motorlow", "cathode": "vdd" },
+      "spec": { "is": 1e-14, "n": 1, "rs": 0.1, "cjo": 0, "tt": 0, "bv": 75, "ibv": 0.00001 }
+    }
+  ],
+  "analysis": { "stopSeconds": 1.2, "stepSeconds": 0.0001, "reltol": 0.0001 }
+}

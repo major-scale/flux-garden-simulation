@@ -1,0 +1,15 @@
+{
+  "id": "hoist-lift-thermal",
+  "bodies": [
+    { "id": "motor-body", "heatCapacityJPerK": 20, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.2 },
+    { "id": "bearing", "heatCapacityJPerK": 5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.05 },
+    { "id": "brake-body", "heatCapacityJPerK": 10, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.1 }
+  ],
+  "routes": [
+    { "source": "m.winding", "receiver": "motor-body" },
+    { "source": "m.viscous", "receiver": "bearing" },
+    { "source": "m.brake", "receiver": "brake-body" },
+    { "source": "sw", "receiver": null },
+    { "source": "fw", "receiver": null }
+  ]
+}

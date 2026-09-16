@@ -1,0 +1,11 @@
+{
+  "id": "rc-ladder",
+  "sources": [{ "kind": "pwl", "name": "vs", "plus": "vin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.001, "value": 0 }, { "atSeconds": 0.00101, "value": 5 }, { "atSeconds": 0.012, "value": 5 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "r1", "ports": { "a": "vin", "b": "n1" }, "spec": { "ohms": 1000 } },
+    { "kind": "capacitor", "name": "c1", "ports": { "plus": "n1", "minus": "0" }, "spec": { "farads": 1e-6 } },
+    { "kind": "resistor", "name": "r2", "ports": { "a": "n1", "b": "n2" }, "spec": { "ohms": 2000 } },
+    { "kind": "capacitor", "name": "c2", "ports": { "plus": "n2", "minus": "0" }, "spec": { "farads": 5e-7 } }
+  ],
+  "analysis": { "stopSeconds": 0.012, "stepSeconds": 1e-5, "reltol": 1e-5 }
+}

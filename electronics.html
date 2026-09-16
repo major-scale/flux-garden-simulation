@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flux Garden — Electronics bench</title>
+  <link rel="icon" href="data:," />
+</head>
+<body class="bench">
+  <div id="bench">
+    <header id="benchhead">
+      <h1>Electronics bench</h1>
+      <a href="/rc.html" style="color:#a9e7d8">RC charging experiment →</a>
+      <div id="benchhud">loading engine…</div>
+      <div id="toast"></div>
+    </header>
+    <div id="benchcols">
+      <div id="benchleft"><div id="controls"></div></div>
+      <div id="benchright">
+        <div id="stage">
+          <div id="stage3d"></div>
+          <div id="stagelabels"></div>
+          <div id="stagelegend"></div>
+        </div>
+        <div id="panels"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/ui/electronics.ts"></script>
+</body>
+</html>

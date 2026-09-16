@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.vite-cache/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+.lake/
+tools/evidence/electronics-v1/

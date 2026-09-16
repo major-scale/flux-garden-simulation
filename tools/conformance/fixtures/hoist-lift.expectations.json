@@ -1,0 +1,17 @@
+{
+  "id": "hoist-lift-v1",
+  "notes": "The motor page's Lift-it numbers on the PUBLIC composition path (electromechanical v1). Hand-derived before the first run: R_tot = 2 + 0.05 ohm; tau = m g r = 0.1 x 9.80665 x 0.04 = 0.0392266 N m; J_eff = 5e-4 + 0.1 x 0.04^2 = 6.6e-4 kg m^2. Steady state V = R i + K w, K i = b w + tau: w_ss = (K V - R tau)/(K^2 + R b) = (1.8 - 0.0804145)/0.09205 = 18.681 rad/s; i_ss = (b w_ss + tau)/K = 0.19303 A. Mechanical lag J_eff R/(K^2 + R b) = 14.7 ms, so theta(0.6) ~ 18.681 x (0.579 - 0.0147) = 10.54 rad and the rack height r theta ~ 0.4217 m. The shaft is braked at rest until 20 ms; a brief sag while the current builds after release is the page's known dip (graced 5 ms, reported).",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "rest-while-braked", "kind": "state", "at": 0.019, "observable": "m.omega", "op": "near", "value": 0, "tolAbs": 1e-5 },
+    { "id": "no-height-while-braked", "kind": "state", "at": 0.019, "observable": "m.height", "op": "near", "value": 0, "tolAbs": 1e-6 },
+    { "id": "coupled-reference", "kind": "motor-reference", "part": "m", "supplyVolts": 6, "seriesOhms": 0.05, "window": [0.021, 0.6], "braked": false, "tolRel": 0.005 },
+    { "id": "steady-speed", "kind": "state", "at": 0.5, "observable": "m.omega", "op": "near", "value": 18.681, "tolAbs": 0.05 },
+    { "id": "steady-current", "kind": "state", "at": 0.5, "observable": "m.windingCurrent", "op": "near", "value": 0.19303, "tolAbs": 0.001 },
+    { "id": "lifted-at-least", "kind": "state", "at": "end", "observable": "m.height", "op": "gt", "value": 0.40 },
+    { "id": "lifted-at-most", "kind": "state", "at": "end", "observable": "m.height", "op": "lt", "value": 0.44 },
+    { "id": "kcl-terminal", "kind": "kcl", "into": ["sw.current", "fw.current"], "out": ["m.current"], "tolRel": 1e-6 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m", "graceSeconds": 0.005 }
+  ]
+}

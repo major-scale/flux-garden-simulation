@@ -1,0 +1,884 @@
+{
+ "tool": "fan-elk-layout",
+ "variant": {
+  "direction": "RIGHT",
+  "groups": true,
+  "routing": "ORTHOGONAL",
+  "placement": "SIMPLE",
+  "compact": true
+ },
+ "elkjs": "0.12.0",
+ "options": {
+  "org.eclipse.elk.algorithm": "layered",
+  "org.eclipse.elk.direction": "RIGHT",
+  "org.eclipse.elk.randomSeed": "7",
+  "org.eclipse.elk.hierarchyHandling": "INCLUDE_CHILDREN",
+  "org.eclipse.elk.edgeRouting": "ORTHOGONAL",
+  "org.eclipse.elk.layered.spacing.baseValue": "1.6",
+  "org.eclipse.elk.spacing.nodeNode": "2.0",
+  "org.eclipse.elk.layered.spacing.nodeNodeBetweenLayers": "2.6",
+  "org.eclipse.elk.spacing.edgeNode": "0.8",
+  "org.eclipse.elk.spacing.edgeEdge": "0.6",
+  "org.eclipse.elk.layered.spacing.edgeNodeBetweenLayers": "0.8",
+  "org.eclipse.elk.layered.spacing.edgeEdgeBetweenLayers": "0.6",
+  "org.eclipse.elk.spacing.portPort": "0.8",
+  "org.eclipse.elk.spacing.componentComponent": "2.0",
+  "org.eclipse.elk.layered.nodePlacement.strategy": "SIMPLE",
+  "org.eclipse.elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
+  "org.eclipse.elk.layered.nodePlacement.bk.edgeStraightening": "NONE",
+  "org.eclipse.elk.layered.thoroughness": "20",
+  "org.eclipse.elk.layered.considerModelOrder.strategy": "NODES_AND_EDGES",
+  "org.eclipse.elk.layered.crossingMinimization.forceNodeModelOrder": "true"
+ },
+ "structureSha256": "80e168f40e536ae70d24e17e8891ccab6de3f37e02f972b181faca2cbba26f56",
+ "units": "deck (x → x, layout y → z; larger z is toward the viewer)",
+ "extent": {
+  "w": 49.5,
+  "h": 19.8
+ },
+ "bodies": {
+  "ntc": {
+   "x": -12.65,
+   "z": -8,
+   "w": 1.2,
+   "h": 3.8,
+   "group": "sensing",
+   "ports": {
+    "a": {
+     "x": -12.65,
+     "z": -10.05,
+     "side": "NORTH"
+    },
+    "b": {
+     "x": -12.65,
+     "z": -5.95,
+     "side": "SOUTH"
+    },
+    "env": {
+     "x": -13.4,
+     "z": -8,
+     "side": "WEST"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "rb": {
+   "x": -12.7,
+   "z": 8,
+   "w": 1.2,
+   "h": 3.8,
+   "group": "sensing",
+   "ports": {
+    "a": {
+     "x": -12.7,
+     "z": 5.95,
+     "side": "NORTH"
+    },
+    "b": {
+     "x": -12.7,
+     "z": 10.05,
+     "side": "SOUTH"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "pot": {
+   "x": -12.85,
+   "z": 0,
+   "w": 1.4,
+   "h": 3.8,
+   "group": "sensing",
+   "ports": {
+    "a": {
+     "x": -12.85,
+     "z": -2.05,
+     "side": "NORTH"
+    },
+    "b": {
+     "x": -12.85,
+     "z": 2.05,
+     "side": "SOUTH"
+    },
+    "w": {
+     "x": -12,
+     "z": 0,
+     "side": "EAST"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "comparator": {
+   "x": 1.45,
+   "z": -6.65,
+   "w": 2.6,
+   "h": 2.4,
+   "group": "control",
+   "ports": {
+    "inp": {
+     "x": 0,
+     "z": -6.2,
+     "side": "WEST"
+    },
+    "inn": {
+     "x": 0,
+     "z": -7.1,
+     "side": "WEST"
+    },
+    "out": {
+     "x": 2.9,
+     "z": -6.65,
+     "side": "EAST"
+    },
+    "vcc": {
+     "x": 1.45,
+     "z": -8,
+     "side": "NORTH"
+    },
+    "gnd": {
+     "x": 1.45,
+     "z": -5.3,
+     "side": "SOUTH"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "mosfet": {
+   "x": 5.75,
+   "z": -6.65,
+   "w": 1.6,
+   "h": 3.8,
+   "group": "control",
+   "ports": {
+    "gate": {
+     "x": 4.8,
+     "z": -6.65,
+     "side": "WEST"
+    },
+    "drain": {
+     "x": 5.75,
+     "z": -8.7,
+     "side": "NORTH"
+    },
+    "source": {
+     "x": 5.75,
+     "z": -4.6,
+     "side": "SOUTH"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "motor": {
+   "x": 22.15,
+   "z": -3.9,
+   "w": 5.2,
+   "h": 5.4,
+   "group": "power",
+   "ports": {
+    "plus": {
+     "x": 19.4,
+     "z": -3.9,
+     "side": "WEST"
+    },
+    "minus": {
+     "x": 24.9,
+     "z": -3.9,
+     "side": "EAST"
+    }
+   },
+   "bodyOffsetZ": -1.7,
+   "bodyLen": 5
+  },
+  "flyback": {
+   "x": 21.45,
+   "z": 1,
+   "w": 3.8,
+   "h": 1.2,
+   "group": "power",
+   "ports": {
+    "anode": {
+     "x": 19.4,
+     "z": 1,
+     "side": "WEST"
+    },
+    "cathode": {
+     "x": 23.5,
+     "z": 1,
+     "side": "EAST"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  },
+  "supply": {
+   "x": -3.05,
+   "z": 2.85,
+   "w": 1.4,
+   "h": 1.4,
+   "group": null,
+   "ports": {
+    "plus": {
+     "x": -2.75,
+     "z": 2,
+     "side": "NORTH"
+    },
+    "minus": {
+     "x": -3.75,
+     "z": 3.7,
+     "side": "SOUTH"
+    }
+   },
+   "bodyOffsetZ": 0,
+   "bodyLen": 3.6
+  }
+ },
+ "junctions": {
+  "vdd": {
+   "x": -24.35,
+   "z": -2.9
+  },
+  "sense": {
+   "x": -22.35,
+   "z": -0.1
+  },
+  "motorlow": {
+   "x": 11.65,
+   "z": -6
+  },
+  "gnd": {
+   "x": 14.65,
+   "z": 6
+  }
+ },
+ "routes": {
+  "net.vdd->supply.plus": [
+   {
+    "x": -23.95,
+    "z": -2.957
+   },
+   {
+    "x": -20.75,
+    "z": -2.957
+   },
+   {
+    "x": -20.75,
+    "z": -17
+   },
+   {
+    "x": -2.75,
+    "z": -17
+   },
+   {
+    "x": -2.75,
+    "z": -11.65
+   },
+   {
+    "x": -2.75,
+    "z": -11.65
+   },
+   {
+    "x": -2.75,
+    "z": 1.85
+   }
+  ],
+  "net.vdd->ntc.a": [
+   {
+    "x": -23.95,
+    "z": -2.729
+   },
+   {
+    "x": -18.75,
+    "z": -2.729
+   },
+   {
+    "x": -18.75,
+    "z": -11
+   },
+   {
+    "x": -12.65,
+    "z": -11
+   },
+   {
+    "x": -12.65,
+    "z": -10.2
+   }
+  ],
+  "net.vdd->pot.a": [
+   {
+    "x": -23.95,
+    "z": -2.614
+   },
+   {
+    "x": -17.75,
+    "z": -2.614
+   },
+   {
+    "x": -17.75,
+    "z": -3
+   },
+   {
+    "x": -12.85,
+    "z": -3
+   },
+   {
+    "x": -12.85,
+    "z": -2.2
+   }
+  ],
+  "net.vdd->comparator.vcc": [
+   {
+    "x": -23.95,
+    "z": -2.843
+   },
+   {
+    "x": -19.75,
+    "z": -2.843
+   },
+   {
+    "x": -19.75,
+    "z": -14
+   },
+   {
+    "x": -8.75,
+    "z": -14
+   },
+   {
+    "x": -8.75,
+    "z": -8.95
+   },
+   {
+    "x": 1.45,
+    "z": -8.95
+   },
+   {
+    "x": 1.45,
+    "z": -8.15
+   }
+  ],
+  "net.vdd->motor.plus": [
+   {
+    "x": -23.95,
+    "z": -3.186
+   },
+   {
+    "x": -22.75,
+    "z": -3.186
+   },
+   {
+    "x": -22.75,
+    "z": -23
+   },
+   {
+    "x": 12.25,
+    "z": -23
+   },
+   {
+    "x": 12.25,
+    "z": -17.65
+   },
+   {
+    "x": 12.25,
+    "z": -17.65
+   },
+   {
+    "x": 12.25,
+    "z": -11.2
+   },
+   {
+    "x": 12.25,
+    "z": -11.2
+   },
+   {
+    "x": 12.25,
+    "z": -8.2
+   },
+   {
+    "x": 18.45,
+    "z": -8.2
+   },
+   {
+    "x": 18.45,
+    "z": -3.9
+   },
+   {
+    "x": 19.25,
+    "z": -3.9
+   }
+  ],
+  "net.vdd->flyback.cathode": [
+   {
+    "x": -23.95,
+    "z": -3.071
+   },
+   {
+    "x": -21.75,
+    "z": -3.071
+   },
+   {
+    "x": -21.75,
+    "z": -20
+   },
+   {
+    "x": 11.25,
+    "z": -20
+   },
+   {
+    "x": 11.25,
+    "z": -14.65
+   },
+   {
+    "x": 11.25,
+    "z": -14.65
+   },
+   {
+    "x": 11.25,
+    "z": -8.2
+   },
+   {
+    "x": 11.25,
+    "z": -8.2
+   },
+   {
+    "x": 11.25,
+    "z": -7.4
+   },
+   {
+    "x": 26.65,
+    "z": -7.4
+   },
+   {
+    "x": 26.65,
+    "z": 1
+   },
+   {
+    "x": 23.65,
+    "z": 1
+   }
+  ],
+  "ntc.b->net.sense": [
+   {
+    "x": -12.65,
+    "z": -5.8
+   },
+   {
+    "x": -12.65,
+    "z": -5
+   },
+   {
+    "x": -7.75,
+    "z": -5
+   },
+   {
+    "x": -7.75,
+    "z": 17
+   },
+   {
+    "x": -19.75,
+    "z": 17
+   },
+   {
+    "x": -19.75,
+    "z": -0.1
+   },
+   {
+    "x": -21.95,
+    "z": -0.1
+   }
+  ],
+  "net.sense->rb.a": [
+   {
+    "x": -21.95,
+    "z": -0.3
+   },
+   {
+    "x": -17.75,
+    "z": -0.3
+   },
+   {
+    "x": -17.75,
+    "z": 5
+   },
+   {
+    "x": -12.7,
+    "z": 5
+   },
+   {
+    "x": -12.7,
+    "z": 5.8
+   }
+  ],
+  "net.sense->comparator.inp": [
+   {
+    "x": -21.95,
+    "z": 0.1
+   },
+   {
+    "x": -20.75,
+    "z": 0.1
+   },
+   {
+    "x": -20.75,
+    "z": 19
+   },
+   {
+    "x": -6.75,
+    "z": 19
+   },
+   {
+    "x": -6.75,
+    "z": -6.2
+   },
+   {
+    "x": -0.15,
+    "z": -6.2
+   }
+  ],
+  "pot.w->comparator.inn": [
+   {
+    "x": -11.85,
+    "z": 0
+   },
+   {
+    "x": -8.75,
+    "z": 0
+   },
+   {
+    "x": -8.75,
+    "z": -7.1
+   },
+   {
+    "x": -0.15,
+    "z": -7.1
+   }
+  ],
+  "comparator.out->mosfet.gate": [
+   {
+    "x": -32.35,
+    "z": -30.84
+   },
+   {
+    "x": -30.75,
+    "z": -30.84
+   }
+  ],
+  "mosfet.drain->net.motorlow": [
+   {
+    "x": 5.75,
+    "z": -8.85
+   },
+   {
+    "x": 5.75,
+    "z": -9.65
+   },
+   {
+    "x": 10.25,
+    "z": -9.65
+   },
+   {
+    "x": 10.25,
+    "z": -6
+   },
+   {
+    "x": 11.25,
+    "z": -6
+   }
+  ],
+  "net.motorlow->motor.minus": [
+   {
+    "x": 12.05,
+    "z": -6.133
+   },
+   {
+    "x": 13.25,
+    "z": -6.133
+   },
+   {
+    "x": 13.25,
+    "z": -6.6
+   },
+   {
+    "x": 17.65,
+    "z": -6.6
+   },
+   {
+    "x": 17.65,
+    "z": 2.4
+   },
+   {
+    "x": 25.85,
+    "z": 2.4
+   },
+   {
+    "x": 25.85,
+    "z": -3.9
+   },
+   {
+    "x": 25.05,
+    "z": -3.9
+   }
+  ],
+  "net.motorlow->flyback.anode": [
+   {
+    "x": 12.05,
+    "z": -5.867
+   },
+   {
+    "x": 14.25,
+    "z": -5.867
+   },
+   {
+    "x": 14.25,
+    "z": 1
+   },
+   {
+    "x": 19.25,
+    "z": 1
+   }
+  ],
+  "net.gnd->supply.minus": [
+   {
+    "x": 14.25,
+    "z": 5.733
+   },
+   {
+    "x": 13.25,
+    "z": 5.733
+   },
+   {
+    "x": 13.25,
+    "z": -4.8
+   },
+   {
+    "x": 9.25,
+    "z": -4.8
+   },
+   {
+    "x": 9.25,
+    "z": 4.65
+   },
+   {
+    "x": -3.75,
+    "z": 4.65
+   },
+   {
+    "x": -3.75,
+    "z": 3.85
+   }
+  ],
+  "net.gnd->rb.b": [
+   {
+    "x": 14.25,
+    "z": 6.133
+   },
+   {
+    "x": 10.25,
+    "z": 6.133
+   },
+   {
+    "x": 10.25,
+    "z": 4.2
+   },
+   {
+    "x": 12.25,
+    "z": 4.2
+   },
+   {
+    "x": 12.25,
+    "z": 10.65
+   },
+   {
+    "x": -5.75,
+    "z": 10.65
+   },
+   {
+    "x": -5.75,
+    "z": 13
+   },
+   {
+    "x": -17.75,
+    "z": 13
+   },
+   {
+    "x": -17.75,
+    "z": 11
+   },
+   {
+    "x": -12.7,
+    "z": 11
+   },
+   {
+    "x": -12.7,
+    "z": 10.2
+   }
+  ],
+  "net.gnd->pot.b": [
+   {
+    "x": 14.25,
+    "z": 6.267
+   },
+   {
+    "x": 13.25,
+    "z": 6.267
+   },
+   {
+    "x": 13.25,
+    "z": 7.2
+   },
+   {
+    "x": 13.25,
+    "z": 7.2
+   },
+   {
+    "x": 13.25,
+    "z": 13.65
+   },
+   {
+    "x": -5.75,
+    "z": 13.65
+   },
+   {
+    "x": -5.75,
+    "z": 15
+   },
+   {
+    "x": -18.75,
+    "z": 15
+   },
+   {
+    "x": -18.75,
+    "z": 10.2
+   },
+   {
+    "x": -14.35,
+    "z": 10.2
+   },
+   {
+    "x": -14.35,
+    "z": 3
+   },
+   {
+    "x": -12.85,
+    "z": 3
+   },
+   {
+    "x": -12.85,
+    "z": 2.2
+   }
+  ],
+  "net.gnd->comparator.gnd": [
+   {
+    "x": 14.25,
+    "z": 6
+   },
+   {
+    "x": 11.25,
+    "z": 6
+   },
+   {
+    "x": 11.25,
+    "z": 1.2
+   },
+   {
+    "x": 11.25,
+    "z": 1.2
+   },
+   {
+    "x": 11.25,
+    "z": 8.65
+   },
+   {
+    "x": -5.75,
+    "z": 8.65
+   },
+   {
+    "x": -5.75,
+    "z": -4.35
+   },
+   {
+    "x": 1.45,
+    "z": -4.35
+   },
+   {
+    "x": 1.45,
+    "z": -5.15
+   }
+  ],
+  "net.gnd->mosfet.source": [
+   {
+    "x": 14.25,
+    "z": 5.867
+   },
+   {
+    "x": 12.25,
+    "z": 5.867
+   },
+   {
+    "x": 12.25,
+    "z": -1.8
+   },
+   {
+    "x": 10.25,
+    "z": -1.8
+   },
+   {
+    "x": 10.25,
+    "z": 6.65
+   },
+   {
+    "x": -4.75,
+    "z": 6.65
+   },
+   {
+    "x": -4.75,
+    "z": -2.35
+   },
+   {
+    "x": 5.75,
+    "z": -2.35
+   },
+   {
+    "x": 5.75,
+    "z": -4.45
+   }
+  ]
+ },
+ "nets": {
+  "vdd": [
+   "supply.plus",
+   "ntc.a",
+   "pot.a",
+   "comparator.vcc",
+   "motor.plus",
+   "flyback.cathode"
+  ],
+  "sense": [
+   "ntc.b",
+   "rb.a",
+   "comparator.inp"
+  ],
+  "reference": [
+   "pot.w",
+   "comparator.inn"
+  ],
+  "gate": [
+   "comparator.out",
+   "mosfet.gate"
+  ],
+  "motorlow": [
+   "mosfet.drain",
+   "motor.minus",
+   "flyback.anode"
+  ],
+  "gnd": [
+   "supply.minus",
+   "rb.b",
+   "pot.b",
+   "comparator.gnd",
+   "mosfet.source"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "rc-design-v1",
+  "source": {
+    "kind": "pwl",
+    "name": "vs",
+    "plus": "vin",
+    "minus": "0",
+    "points": [
+      {
+        "atSeconds": 0,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.001,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.00101,
+        "value": 5
+      },
+      {
+        "atSeconds": 0.012,
+        "value": 5
+      }
+    ]
+  },
+  "analysis": {
+    "stopSeconds": 0.012,
+    "stepSeconds": 1e-05,
+    "reltol": 1e-05
+  },
+  "nodes": [
+    "vin",
+    "vc",
+    "0"
+  ],
+  "maxParts": 2,
+  "parts": {
+    "r": {
+      "kind": "resistor",
+      "spec": {
+        "ohms": [
+          2500,
+          20000
+        ]
+      }
+    },
+    "c": {
+      "kind": "capacitor",
+      "spec": {
+        "farads": [
+          1e-07,
+          1e-06
+        ]
+      }
+    }
+  },
+  "requiredParts": [
+    "r",
+    "c"
+  ]
+}

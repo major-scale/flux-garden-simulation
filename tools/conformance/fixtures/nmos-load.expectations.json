@@ -1,0 +1,14 @@
+{
+  "id": "nmos-load-v1",
+  "notes": "Level-1 NMOS low-side switch (the fan trial's device: VTO 2 V, KP 20 uA/V^2, W/L 1e4, so beta = 0.2 A/V^2). Hand-derived before the first run: gate 0 V -> OFF, no subthreshold conduction in this model, drain at 12 V; gate 10 V -> triode, R_on ~ 1/(beta*(Vgs - VTO)) = 0.625 ohm, drain ~ 12*0.625/24.625 = 0.30 V, load current ~ 0.49 A. KCL at the device: load + gate currents = source current (the gate carries only its capacitances' charging current).",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "off-before", "kind": "state", "at": 0.0005, "observable": "m.vdrain", "op": "near", "value": 12, "tolAbs": 0.01 },
+    { "id": "on", "kind": "state", "at": 0.004, "observable": "m.vdrain", "op": "lt", "value": 0.5 },
+    { "id": "off-after", "kind": "state", "at": 0.009, "observable": "m.vdrain", "op": "near", "value": 12, "tolAbs": 0.01 },
+    { "id": "kcl-device", "kind": "kcl", "into": ["rl.current", "rg.current"], "out": ["m.sourceCurrent"], "tolRel": 1e-6 },
+    { "id": "gate-current-is-the-drive", "kind": "kcl", "into": ["rg.current"], "out": ["m.gateCurrent"], "tolRel": 1e-6, "minPeakAmps": 1e-6 },
+    { "id": "load-current-bounds", "kind": "bounds", "observable": "rl.current", "min": -2e-5, "max": 0.51 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 }
+  ]
+}

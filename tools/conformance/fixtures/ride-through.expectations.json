@@ -1,0 +1,226 @@
+{
+ "id": "ride-through-v1",
+ "checks": [
+  {
+   "id": "connected",
+   "kind": "connectivity",
+   "danglingPorts": "warn"
+  },
+  {
+   "id": "output-zero-at-start",
+   "kind": "state",
+   "at": 0.0005,
+   "observable": "node:out",
+   "op": "lt",
+   "value": 0.05
+  },
+  {
+   "id": "source-current-limit-and-no-backfeed",
+   "kind": "bounds",
+   "observable": "vs.current",
+   "min": -0.07,
+   "max": 1e-08
+  },
+  {
+   "id": "load-law",
+   "kind": "ohm",
+   "part": "load",
+   "tolRel": 0.0001
+  },
+  {
+   "id": "output-powered-before-dropout",
+   "kind": "state",
+   "at": 0.0999,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-01ms",
+   "kind": "state",
+   "at": 0.101,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-02ms",
+   "kind": "state",
+   "at": 0.102,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-03ms",
+   "kind": "state",
+   "at": 0.103,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-04ms",
+   "kind": "state",
+   "at": 0.104,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-05ms",
+   "kind": "state",
+   "at": 0.105,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-06ms",
+   "kind": "state",
+   "at": 0.106,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-07ms",
+   "kind": "state",
+   "at": 0.107,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-08ms",
+   "kind": "state",
+   "at": 0.108,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-09ms",
+   "kind": "state",
+   "at": 0.109,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-10ms",
+   "kind": "state",
+   "at": 0.11,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-11ms",
+   "kind": "state",
+   "at": 0.111,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-12ms",
+   "kind": "state",
+   "at": 0.112,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-13ms",
+   "kind": "state",
+   "at": 0.113,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-14ms",
+   "kind": "state",
+   "at": 0.114,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-15ms",
+   "kind": "state",
+   "at": 0.115,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-16ms",
+   "kind": "state",
+   "at": 0.116,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-17ms",
+   "kind": "state",
+   "at": 0.117,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-18ms",
+   "kind": "state",
+   "at": 0.118,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-19ms",
+   "kind": "state",
+   "at": 0.119,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-holds-20ms",
+   "kind": "state",
+   "at": 0.1199,
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-recovers",
+   "kind": "state",
+   "at": "end",
+   "observable": "node:out",
+   "op": "gt",
+   "value": 3.3
+  },
+  {
+   "id": "output-never-above-input",
+   "kind": "bounds",
+   "observable": "node:out",
+   "min": -0.001,
+   "max": 5.001
+  },
+  {
+   "id": "diode-law",
+   "kind": "diode-law",
+   "part": "d1"
+  },
+  {
+   "id": "energy-account",
+   "kind": "energy-balance",
+   "tolRel": 0.001,
+   "tolStorageRel": 0.02
+  }
+ ],
+ "notes": "Promoted regression fixture: the run-005 reviewer reference (r1 75 ohm, flat diode d1, c1 150 uF, load 1 kohm) with its frozen nominal expectations (calibration: pilot/run-005-deepseek/reviewer/calibration.md), plus the diode law and the network energy account added for electronics v1."
+}

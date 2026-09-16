@@ -1,0 +1,13 @@
+{
+  "id": "hoist-balanced-hold-v1",
+  "notes": "TORQUE-BALANCED ZERO-SPEED EQUILIBRIUM (a different case from the locked shaft). Supply chosen so the stall torque exactly carries the weight: K i = tau with i = V/R_tot, so V = R_tot tau / K = 2.05 x 0.0392266 / 0.3 = 0.2680485 V and i = 0.130757 A. The switch closes at 20 ms with the brake held; the current settles (L/R = 2.44 ms); the brake is RELEASED at 50 ms and the free shaft stays at zero speed because the torques balance — the brake then carries no torque at all (before release it carried only tau - K i, which is also ~0). Steady speed from the algebra: w_ss = (K V - R tau)/(K^2 + R b) ~ +2e-7 rad/s.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "shaft-still-though-free", "kind": "bounds", "observable": "m.omega", "min": -0.001, "max": 0.001 },
+    { "id": "no-height", "kind": "state", "at": "end", "observable": "m.height", "op": "near", "value": 0, "tolAbs": 0.0001 },
+    { "id": "holding-current", "kind": "state", "at": 0.3, "observable": "m.windingCurrent", "op": "near", "value": 0.130757, "tolAbs": 0.0001 },
+    { "id": "brake-carries-nothing-after-release", "kind": "state", "at": 0.3, "observable": "m.brakeTorque", "op": "near", "value": 0, "tolAbs": 1e-6 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m" }
+  ]
+}

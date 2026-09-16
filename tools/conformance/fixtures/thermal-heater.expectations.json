@@ -1,0 +1,10 @@
+{
+  "id": "thermal-heater-v1",
+  "notes": "Electrothermal v1: the simplest loss source. 12 V across 10 ohm dissipates P = V^2/R = 14.4 W, constant from the operating point on; the resistor's current is 1.2 A. The thermal layer (tools/conformance/fixtures/thermal-heater.thermal.json) routes it to one lumped body; this file checks only the electrical side.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "ohm-rh", "kind": "ohm", "part": "rh", "tolRel": 1e-6 },
+    { "id": "heater-current", "kind": "state", "at": "end", "observable": "rh.current", "op": "near", "value": 1.2, "tolAbs": 1e-6 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 }
+  ]
+}

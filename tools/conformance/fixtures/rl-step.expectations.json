@@ -1,0 +1,13 @@
+{
+  "id": "rl-step-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-series", "kind": "kcl", "into": ["r.current"], "out": ["l.current"], "tolRel": 1e-6 },
+    { "id": "probe-vs-element", "kind": "kcl", "into": ["l.current"], "out": ["l.windingCurrent"], "tolRel": 1e-9 },
+    { "id": "ohm-r", "kind": "ohm", "part": "r", "tolRel": 1e-4 },
+    { "id": "inductor-law-and-energy", "kind": "storage-law", "part": "l", "window": [0.0005, 0.006], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "rl-step-analytic", "kind": "reference", "observable": "l.current", "model": "first-order-step", "startAtSeconds": 0.001005, "from": 0, "to": 0.5, "tauSeconds": 0.001, "window": [0.0012, 0.006], "tolRel": 0.001 },
+    { "id": "settled-at-end", "kind": "state", "at": "end", "observable": "l.current", "op": "near", "value": 0.5, "tolAbs": 0.005 },
+    { "id": "current-bounds", "kind": "bounds", "observable": "l.current", "min": -1e-6, "max": 0.51 }
+  ]
+}

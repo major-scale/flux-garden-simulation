@@ -1,0 +1,17 @@
+{
+ "id": "sensing-energy-v1",
+ "notes": "Electronics v1 energy coverage: the ACCEPTED composition of sensing-ldr (byte-frozen fixture untouched), re-used under a new id so the network energy account runs on these part kinds. LDR reading a declared lux programme, comparator (supply in, output out, ground returns internal), LED, potentiometer: the comparator is dissipative overall.",
+ "checks": [
+  {
+   "id": "connected",
+   "kind": "connectivity",
+   "danglingPorts": "warn"
+  },
+  {
+   "id": "energy-account",
+   "kind": "energy-balance",
+   "tolRel": 0.001,
+   "tolStorageRel": 0.02
+  }
+ ]
+}

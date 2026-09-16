@@ -1,0 +1,141 @@
+{
+  "id": "temperature-motor-trial-v1",
+  "checks": [
+    {
+      "id": "connected",
+      "kind": "connectivity",
+      "danglingPorts": "off"
+    },
+    {
+      "id": "sensor-law",
+      "kind": "sensor-law",
+      "part": "s"
+    },
+    {
+      "id": "reference-law",
+      "kind": "ohm",
+      "part": "p"
+    },
+    {
+      "id": "comparator",
+      "kind": "comparator",
+      "part": "c"
+    },
+    {
+      "id": "temperature-domain",
+      "kind": "bounds",
+      "observable": "s.env",
+      "min": 10,
+      "max": 45
+    },
+    {
+      "id": "initial-current",
+      "kind": "state",
+      "observable": "m.current",
+      "at": 0,
+      "op": "near",
+      "value": 0,
+      "tolAbs": 0.000001
+    },
+    {
+      "id": "initial-rest",
+      "kind": "state",
+      "observable": "m.omega",
+      "at": 0,
+      "op": "near",
+      "value": 0,
+      "tolAbs": 0.0001
+    },
+    {
+      "id": "cold-off",
+      "kind": "state",
+      "observable": "q.vgate",
+      "at": 0.05,
+      "op": "lt",
+      "value": 0.1
+    },
+    {
+      "id": "warm-on",
+      "kind": "state",
+      "observable": "q.vgate",
+      "at": 0.5,
+      "op": "gt",
+      "value": 4
+    },
+    {
+      "id": "cool-off",
+      "kind": "state",
+      "observable": "q.vgate",
+      "at": 1.1,
+      "op": "lt",
+      "value": 0.1
+    },
+    {
+      "id": "on-transition",
+      "kind": "switching",
+      "part": "c",
+      "direction": "low->high",
+      "window": [
+        0.1,
+        0.3
+      ]
+    },
+    {
+      "id": "off-transition",
+      "kind": "switching",
+      "part": "c",
+      "direction": "high->low",
+      "window": [
+        0.7,
+        0.9
+      ]
+    },
+    {
+      "id": "spin-up",
+      "kind": "state",
+      "observable": "m.omega",
+      "at": 0.6,
+      "op": "gt",
+      "value": 5
+    },
+    {
+      "id": "rotational-domain",
+      "kind": "bounds",
+      "observable": "m.omega",
+      "min": -0.001,
+      "max": 30
+    },
+    {
+      "id": "winding-limit",
+      "kind": "bounds",
+      "observable": "m.current",
+      "min": -0.001,
+      "max": 3.1
+    },
+    {
+      "id": "freewheel",
+      "kind": "peak",
+      "observable": "fw.current",
+      "window": [
+        0.7,
+        0.92
+      ],
+      "min": 0.005
+    },
+    {
+      "id": "flyback-blocks-before",
+      "kind": "state",
+      "observable": "fw.current",
+      "at": 0.5,
+      "op": "lt",
+      "value": 0.000001
+    },
+    {
+      "id": "flyback-limit",
+      "kind": "bounds",
+      "observable": "fw.current",
+      "min": -0.000001,
+      "max": 3.1
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "sensing-ldr-parallel-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "ldr-law-own-probe", "kind": "sensor-law", "part": "s", "tolRel": 1e-3 },
+    { "id": "kcl-branch", "kind": "kcl", "into": ["rf.current"], "out": ["s.current", "rb.current"], "tolRel": 1e-6 },
+    { "id": "ohm-bleeder", "kind": "ohm", "part": "rb", "tolRel": 1e-4 }
+  ]
+}

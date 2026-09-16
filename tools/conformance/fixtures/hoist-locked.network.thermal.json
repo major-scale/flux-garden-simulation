@@ -1,0 +1,20 @@
+{
+  "id": "hoist-locked-network",
+  "bodies": [
+    { "id": "winding", "heatCapacityJPerK": 5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0 },
+    { "id": "casing", "heatCapacityJPerK": 40, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.3 },
+    { "id": "bearing", "heatCapacityJPerK": 5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.02 },
+    { "id": "brake-body", "heatCapacityJPerK": 10, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.1 }
+  ],
+  "links": [
+    { "id": "winding-casing", "a": "winding", "b": "casing", "conductanceWPerK": 1 },
+    { "id": "bearing-casing", "a": "bearing", "b": "casing", "conductanceWPerK": 0.5 }
+  ],
+  "routes": [
+    { "source": "m.winding", "receiver": "winding" },
+    { "source": "m.viscous", "receiver": "bearing" },
+    { "source": "m.brake", "receiver": "brake-body" },
+    { "source": "sw", "receiver": null },
+    { "source": "fw", "receiver": null }
+  ]
+}

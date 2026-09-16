@@ -1,0 +1,13 @@
+{
+  "artifact": "rc.cir",
+  "project": "ngspice/ngspice",
+  "sourceUrl": "https://github.com/ngspice/ngspice/blob/032b1c32c4dbad45ff132bcfac1dbecadbd8abb0/tests/general/rc.cir",
+  "rawUrl": "https://raw.githubusercontent.com/ngspice/ngspice/032b1c32c4dbad45ff132bcfac1dbecadbd8abb0/tests/general/rc.cir",
+  "upstreamCommit": "032b1c32c4dbad45ff132bcfac1dbecadbd8abb0",
+  "retrievedUtc": "2026-09-14",
+  "license": "LicenseRef-Spice3f5-UCB",
+  "licenseSourceUrl": "https://github.com/ngspice/ngspice/blob/032b1c32c4dbad45ff132bcfac1dbecadbd8abb0/COPYING",
+  "licenseNote": "The preserved text is the explicit Spice3f5 UCB permission notice from upstream COPYING. Upstream describes Spice3 analog circuit material as New BSD, but this record uses a LicenseRef rather than asserting exact SPDX BSD-3-Clause equivalence. This basic Berkeley-SPICE-compatible regression deck contains only that analog surface.",
+  "authorshipEvidence": "The upstream repository and git history attribute this independently maintained regression artifact to ngspice; Flux Garden did not author it.",
+  "originalSha256": "a3d6e0032a132fbdad0de7003451631630eae2a697417460ab548731c56bc5e9"
+}

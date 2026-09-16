@@ -1,0 +1,134 @@
+{
+  "id": "ride-through-functional",
+  "source": {
+    "kind": "pwl",
+    "name": "vs",
+    "plus": "vin",
+    "minus": "0",
+    "points": [
+      {
+        "atSeconds": 0,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.001,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.00101,
+        "value": 5
+      },
+      {
+        "atSeconds": 0.1,
+        "value": 5
+      },
+      {
+        "atSeconds": 0.10001,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.12000000000000001,
+        "value": 0
+      },
+      {
+        "atSeconds": 0.12001,
+        "value": 5
+      },
+      {
+        "atSeconds": 0.13,
+        "value": 5
+      }
+    ]
+  },
+  "analysis": {
+    "stopSeconds": 0.13,
+    "stepSeconds": 1e-05,
+    "reltol": 0.0001
+  },
+  "nodes": [
+    "vin",
+    "out",
+    "n1",
+    "n2",
+    "n3",
+    "0"
+  ],
+  "parts": {
+    "load": {
+      "kind": "resistor",
+      "ports": {
+        "a": "out",
+        "b": "0"
+      },
+      "spec": {
+        "ohms": [
+          1000,
+          1000
+        ]
+      }
+    },
+    "d1": {
+      "kind": "diode",
+      "ports": {
+        "anode": "vin",
+        "cathode": "n1"
+      },
+      "spec": {
+        "is": [
+          1e-14,
+          1e-14
+        ],
+        "n": [
+          1,
+          1
+        ],
+        "rs": [
+          0.5,
+          0.5
+        ],
+        "cjo": [
+          0,
+          0
+        ],
+        "tt": [
+          0,
+          0
+        ],
+        "bv": [
+          50,
+          50
+        ],
+        "ibv": [
+          1e-06,
+          1e-06
+        ]
+      }
+    },
+    "c1": {
+      "kind": "capacitor",
+      "ports": {
+        "plus": "n1",
+        "minus": "0"
+      },
+      "spec": {
+        "farads": [
+          0.00047,
+          0.00047
+        ]
+      }
+    },
+    "r1": {
+      "kind": "resistor",
+      "ports": {
+        "a": "n1",
+        "b": "out"
+      },
+      "spec": {
+        "ohms": [
+          1,
+          1
+        ]
+      }
+    }
+  }
+}

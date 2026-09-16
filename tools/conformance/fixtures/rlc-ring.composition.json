@@ -1,0 +1,10 @@
+{
+  "id": "rlc-ring",
+  "sources": [{ "kind": "pwl", "name": "vs", "plus": "vin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.0001, "value": 0 }, { "atSeconds": 0.000101, "value": 1 }, { "atSeconds": 0.005, "value": 1 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "r", "ports": { "a": "vin", "b": "n1" }, "spec": { "ohms": 20 } },
+    { "kind": "inductor", "name": "l", "ports": { "plus": "n1", "minus": "n2" }, "spec": { "henries": 0.01 } },
+    { "kind": "capacitor", "name": "c", "ports": { "plus": "n2", "minus": "0" }, "spec": { "farads": 1e-6 } }
+  ],
+  "analysis": { "stopSeconds": 0.005, "stepSeconds": 1e-6, "reltol": 1e-5 }
+}

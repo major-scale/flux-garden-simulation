@@ -1,0 +1,14 @@
+{
+  "id": "hoist-balanced-hold",
+  "sources": [{ "kind": "dc", "name": "vdd", "plus": "nd", "minus": "0", "volts": 0.2680485 }],
+  "parts": [
+    { "kind": "switch", "name": "sw", "ports": { "a": "nd", "b": "na" }, "spec": { "rOnOhms": 0.05, "rOffOhms": 1e9 }, "programme": { "closeAtSeconds": 0.02, "openAtSeconds": null, "edgeSeconds": 0.001 } },
+    { "kind": "motor", "name": "m", "ports": { "plus": "na", "minus": "0" }, "spec": {
+      "motor": { "resistanceOhms": 2, "inductanceHenries": 0.005, "kVsPerRad": 0.3 },
+      "load": { "inertiaKgM2": 0.0005, "viscousNmS": 0.001, "constantTorqueNm": 0 },
+      "rack": { "massKg": 0.1, "pinionRadiusM": 0.04, "gravity": 9.80665 },
+      "brake": { "releaseAtSeconds": 0.05, "edgeSeconds": 0.001 } } },
+    { "kind": "diode", "name": "fw", "ports": { "anode": "0", "cathode": "na" }, "spec": { "is": 1e-14, "n": 1, "rs": 0.1, "cjo": 0, "tt": 0, "bv": 75, "ibv": 1e-5 } }
+  ],
+  "analysis": { "stopSeconds": 0.6, "stepSeconds": 0.0001, "reltol": 0.0001 }
+}

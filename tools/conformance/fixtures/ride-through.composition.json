@@ -1,0 +1,102 @@
+{
+ "id": "ride-through",
+ "sources": [
+  {
+   "kind": "pwl",
+   "name": "vs",
+   "plus": "vin",
+   "minus": "0",
+   "points": [
+    {
+     "atSeconds": 0,
+     "value": 0
+    },
+    {
+     "atSeconds": 0.001,
+     "value": 0
+    },
+    {
+     "atSeconds": 0.00101,
+     "value": 5
+    },
+    {
+     "atSeconds": 0.1,
+     "value": 5
+    },
+    {
+     "atSeconds": 0.10001,
+     "value": 0
+    },
+    {
+     "atSeconds": 0.12000000000000001,
+     "value": 0
+    },
+    {
+     "atSeconds": 0.12001,
+     "value": 5
+    },
+    {
+     "atSeconds": 0.13,
+     "value": 5
+    }
+   ]
+  }
+ ],
+ "parts": [
+  {
+   "kind": "resistor",
+   "name": "r1",
+   "ports": {
+    "a": "vin",
+    "b": "n1"
+   },
+   "spec": {
+    "ohms": 75
+   }
+  },
+  {
+   "kind": "diode",
+   "name": "d1",
+   "ports": {
+    "anode": "n1",
+    "cathode": "out"
+   },
+   "spec": {
+    "is": 1e-14,
+    "n": 1,
+    "rs": 0.5,
+    "cjo": 0,
+    "tt": 0,
+    "bv": 50,
+    "ibv": 1e-06
+   }
+  },
+  {
+   "kind": "capacitor",
+   "name": "c1",
+   "ports": {
+    "plus": "out",
+    "minus": "0"
+   },
+   "spec": {
+    "farads": 0.00015
+   }
+  },
+  {
+   "kind": "resistor",
+   "name": "load",
+   "ports": {
+    "a": "out",
+    "b": "0"
+   },
+   "spec": {
+    "ohms": 1000
+   }
+  }
+ ],
+ "analysis": {
+  "stopSeconds": 0.13,
+  "stepSeconds": 1e-05,
+  "reltol": 0.0001
+ }
+}

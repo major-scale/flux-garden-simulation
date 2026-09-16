@@ -1,0 +1,8 @@
+{
+  "id": "thermal-heater",
+  "sources": [{ "kind": "dc", "name": "vs", "plus": "a", "minus": "0", "volts": 12 }],
+  "parts": [
+    { "kind": "resistor", "name": "rh", "ports": { "a": "a", "b": "0" }, "spec": { "ohms": 10 } }
+  ],
+  "analysis": { "stopSeconds": 0.1, "stepSeconds": 0.001, "reltol": 0.0001 }
+}

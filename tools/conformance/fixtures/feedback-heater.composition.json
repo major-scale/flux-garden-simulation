@@ -1,0 +1,6 @@
+{
+  "id": "feedback-heater",
+  "sources": [ { "kind": "dc", "name": "vs", "plus": "vcc", "minus": "0", "volts": 12 } ],
+  "parts": [ { "kind": "resistor", "name": "rh", "ports": { "a": "vcc", "b": "0" }, "spec": { "ohms": 24 } } ],
+  "analysis": { "stopSeconds": 2e-6, "stepSeconds": 1e-6, "reltol": 1e-9 }
+}

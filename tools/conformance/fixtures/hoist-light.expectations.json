@@ -1,0 +1,14 @@
+{
+  "id": "hoist-light-v1",
+  "notes": "hoist-lift with a 20 g load. Hand-derived before the first run: tau = 0.02 x 9.80665 x 0.04 = 0.00784532 N m; w_ss = (1.8 - 2.05 x 0.00784532)/0.09205 = 19.380 rad/s; i_ss = (0.019380 + 0.00784532)/0.3 = 0.09075 A; J_eff = 5.32e-4, lag 11.9 ms, theta(0.6) ~ 19.38 x 0.567 = 10.99 rad, height ~ 0.440 m. Lighter load: less current, more speed, more height than hoist-lift.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "coupled-reference", "kind": "motor-reference", "part": "m", "supplyVolts": 6, "seriesOhms": 0.05, "window": [0.021, 0.6], "braked": false, "tolRel": 0.005 },
+    { "id": "steady-speed", "kind": "state", "at": 0.5, "observable": "m.omega", "op": "near", "value": 19.380, "tolAbs": 0.05 },
+    { "id": "steady-current", "kind": "state", "at": 0.5, "observable": "m.windingCurrent", "op": "near", "value": 0.09075, "tolAbs": 0.001 },
+    { "id": "lifted-at-least", "kind": "state", "at": "end", "observable": "m.height", "op": "gt", "value": 0.42 },
+    { "id": "lifted-at-most", "kind": "state", "at": "end", "observable": "m.height", "op": "lt", "value": 0.46 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m", "graceSeconds": 0.005 }
+  ]
+}

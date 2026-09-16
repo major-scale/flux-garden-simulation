@@ -1,0 +1,9 @@
+{
+  "id": "thermostat",
+  "thermal": { "id": "thermostat-thermal", "bodies": [ { "id": "plate", "heatCapacityJPerK": 5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.05 } ],
+    "routes": [ { "source": "rh", "receiver": "plate" }, { "source": "sn", "receiver": "plate" }, { "source": "rf", "receiver": null }, { "source": "c", "receiver": null } ] },
+  "bindings": [ { "part": "rh", "law": "linear", "body": "plate", "rRefOhms": 24, "alphaPerK": 0.004, "tRefK": 293.15, "domainK": [233.15, 473.15] }, { "part": "sn", "law": "ntc", "body": "plate" } ],
+  "controller": { "comparator": "c", "reference": "vr", "sensor": "sn", "lowK": 313.15, "highK": 318.15, "initial": "heating" },
+  "clock": { "stopSeconds": 300, "stepSeconds": 1, "eventToleranceSeconds": 0.001 },
+  "disturbances": [ { "atSeconds": 150, "body": "plate", "ambientTemperatureK": 273.15 } ]
+}

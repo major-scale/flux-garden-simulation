@@ -1,0 +1,17 @@
+{
+ "id": "controls-energy-v1",
+ "notes": "Electronics v1 energy coverage: the ACCEPTED composition of controls-bench (byte-frozen fixture untouched), re-used under a new id so the network energy account runs on these part kinds. switch, potentiometer (three terminals), LED and resistors: every passive part must absorb >= 0 and the account must close.",
+ "checks": [
+  {
+   "id": "connected",
+   "kind": "connectivity",
+   "danglingPorts": "warn"
+  },
+  {
+   "id": "energy-account",
+   "kind": "energy-balance",
+   "tolRel": 0.001,
+   "tolStorageRel": 0.02
+  }
+ ]
+}

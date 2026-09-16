@@ -1,0 +1,18 @@
+{
+ "recorded": "2026-09-12T18:07:12.209Z",
+ "note": "motor page decks BEFORE electromechanical-v1; any refactor must reproduce these bytes",
+ "presets": {
+  "lift-it": {
+   "sha256": "d62f4805d939720c48044b781372dd8bce66390242910f299cdf401f0af87225",
+   "netlist": "* Flux Garden: DC motor lifting a rigid rack load, generated from a validated description\nVdd nd 0 DC 6\nVsw ctl 0 PWL(0 0 0.02 0 0.021 1 0.6 1)\nS1 nd na ctl 0 SWMAIN\n.model SWMAIN SW(RON=0.05 ROFF=1000000000 VT=0.5 VH=0.1)\nRM na nb 2\nLM nb nc 0.005\nEB nc 0 vw 0 0.3\nVdp 0 dk DC 0\nD1 dk na DFW\n.model DFW D(IS=1e-14 N=1 RS=0.1 CJO=0 TT=0 BV=75 IBV=0.00001)\nBt 0 vw I=0.3*i(LM)\nCj vw 0 0.00066\nRb vw 0 1000\nIl vw 0 DC 0.0392266\nVbrk brk 0 PWL(0 1 0.02 1 0.021 0 0.6 0)\nVbr vw bk DC 0\nSb bk 0 brk 0 SWBRAKE\n.model SWBRAKE SW(RON=1e-6 ROFF=1e12 VT=0.5 VH=0.1)\n.options reltol=1e-4\n.tran 0.0001 0.6 0 0.0001\n.end\n"
+  },
+  "locked-shaft": {
+   "sha256": "71ef865317c12cdeb55b63739abd8856a119ec2c95c5117e097404acb071311a",
+   "netlist": "* Flux Garden: DC motor lifting a rigid rack load, generated from a validated description\nVdd nd 0 DC 6\nVsw ctl 0 PWL(0 0 0.02 0 0.021 1 0.6 1)\nS1 nd na ctl 0 SWMAIN\n.model SWMAIN SW(RON=0.05 ROFF=1000000000 VT=0.5 VH=0.1)\nRM na nb 2\nLM nb nc 0.005\nEB nc 0 vw 0 0.3\nVdp 0 dk DC 0\nD1 dk na DFW\n.model DFW D(IS=1e-14 N=1 RS=0.1 CJO=0 TT=0 BV=75 IBV=0.00001)\nBt 0 vw I=0.3*i(LM)\nCj vw 0 0.00066\nRb vw 0 1000\nIl vw 0 DC 0.0392266\nVbrk brk 0 DC 1\nVbr vw bk DC 0\nSb bk 0 brk 0 SWBRAKE\n.model SWBRAKE SW(RON=1e-6 ROFF=1e12 VT=0.5 VH=0.1)\n.options reltol=1e-4\n.tran 0.0001 0.6 0 0.0001\n.end\n"
+  },
+  "switch-off": {
+   "sha256": "8bbd077042cd341f6e39f851faddd46d3c2c79b5ed5b9713ba8164648762f278",
+   "netlist": "* Flux Garden: DC motor lifting a rigid rack load, generated from a validated description\nVdd nd 0 DC 6\nVsw ctl 0 PWL(0 0 0.02 0 0.021 1 0.4 1 0.401 0 0.6 0)\nS1 nd na ctl 0 SWMAIN\n.model SWMAIN SW(RON=0.05 ROFF=1000000000 VT=0.5 VH=0.1)\nRM na nb 2\nLM nb nc 0.005\nEB nc 0 vw 0 0.3\nVdp 0 dk DC 0\nD1 dk na DFW\n.model DFW D(IS=1e-14 N=1 RS=0.1 CJO=0 TT=0 BV=75 IBV=0.00001)\nBt 0 vw I=0.3*i(LM)\nCj vw 0 0.00066\nRb vw 0 1000\nIl vw 0 DC 0.0392266\nVbrk brk 0 PWL(0 1 0.02 1 0.021 0 0.6 0)\nVbr vw bk DC 0\nSb bk 0 brk 0 SWBRAKE\n.model SWBRAKE SW(RON=1e-6 ROFF=1e12 VT=0.5 VH=0.1)\n.options reltol=1e-4\n.tran 0.0001 0.6 0 0.0001\n.end\n"
+  }
+ }
+}

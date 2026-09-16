@@ -1,0 +1,16 @@
+{
+  "id": "controls-bench-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-wiper", "kind": "kcl", "into": ["p.currentW"], "out": ["rs.current"], "tolRel": 1e-6 },
+    { "id": "kcl-led", "kind": "kcl", "into": ["rs.current"], "out": ["l.current"], "tolRel": 1e-6 },
+    { "id": "kcl-switch", "kind": "kcl", "into": ["t.current"], "out": ["p.currentA"], "tolRel": 1e-6 },
+    { "id": "ohm-series", "kind": "ohm", "part": "rs", "tolRel": 1e-4 },
+    { "id": "ohm-pot-legs", "kind": "ohm", "part": "p", "tolRel": 1e-4 },
+    { "id": "led-law", "kind": "diode-law", "part": "l", "tolRel": 2e-3 },
+    { "id": "led-limit", "kind": "bounds", "observable": "l.current", "min": -1e-9, "max": 0.03 },
+    { "id": "dark-before", "kind": "state", "at": 0.002, "observable": "l.current", "op": "lt", "value": 1e-9 },
+    { "id": "lit-after", "kind": "state", "at": 0.015, "observable": "l.current", "op": "gt", "value": 0.001 },
+    { "id": "closes-once", "kind": "switching", "part": "t", "direction": "low->high", "window": [0.004, 0.007] }
+  ]
+}

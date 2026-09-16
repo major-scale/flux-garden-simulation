@@ -1,0 +1,13 @@
+{
+  "id": "nmos-load",
+  "sources": [
+    { "kind": "dc", "name": "vdd", "plus": "vdd", "minus": "0", "volts": 12 },
+    { "kind": "pwl", "name": "vg", "plus": "vgin", "minus": "0", "points": [{ "atSeconds": 0, "value": 0 }, { "atSeconds": 0.001, "value": 0 }, { "atSeconds": 0.00101, "value": 10 }, { "atSeconds": 0.006, "value": 10 }, { "atSeconds": 0.00601, "value": 0 }, { "atSeconds": 0.01, "value": 0 }] }
+  ],
+  "parts": [
+    { "kind": "resistor", "name": "rl", "ports": { "a": "vdd", "b": "d" }, "spec": { "ohms": 24 } },
+    { "kind": "mosfet", "name": "m", "ports": { "drain": "d", "gate": "g", "source": "0" }, "spec": { "vto": 2, "kp": 2e-5, "lambda": 0.01, "tox": 1e-7, "cgso": 1e-9, "cgdo": 1e-9, "widthM": 0.01, "lengthM": 1e-6 } },
+    { "kind": "resistor", "name": "rg", "ports": { "a": "vgin", "b": "g" }, "spec": { "ohms": 100 } }
+  ],
+  "analysis": { "stopSeconds": 0.01, "stepSeconds": 2e-6, "reltol": 1e-5 }
+}

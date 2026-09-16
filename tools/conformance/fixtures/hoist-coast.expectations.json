@@ -1,0 +1,13 @@
+{
+  "id": "hoist-coast-v1",
+  "notes": "The page's Switch-it-off on the public path: lift, then the switch opens at 0.40 s; the winding current freewheels through the diode for well under a millisecond, then the shaft COASTS (i = 0) against the weight and viscous friction. Hand-derived before the first run: coasting w(t) = (w0 + tau/b) e^(-b t/J_eff) - tau/b with tau/b = 39.227 rad/s, b/J_eff = 1.515 /s, w0 ~ 18.68 rad/s: zero speed about 0.257 s after the opening, i.e. near 0.657 s — AFTER this 0.6 s run ends, so it stays inside the supported (no reverse) domain. At 0.6 s: w ~ 57.91 x e^(-1.515 x 0.199) - 39.23 ~ 3.6 rad/s. A longer run reverses and must be refused by the domain check (a negative in electromechanical-v1.test.ts).",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "freewheels", "kind": "peak", "observable": "fw.current", "window": [0.40, 0.402], "min": 0.01 },
+    { "id": "diode-blocks-otherwise", "kind": "bounds", "observable": "fw.current", "min": -1e-6 },
+    { "id": "still-rising-at-end", "kind": "state", "at": "end", "observable": "m.omega", "op": "gt", "value": 1 },
+    { "id": "slowing-at-end", "kind": "state", "at": "end", "observable": "m.omega", "op": "lt", "value": 6 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m", "graceSeconds": 0.005 }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "rl-pair-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-series-1", "kind": "kcl", "into": ["r.current"], "out": ["l1.current"], "tolRel": 1e-6 },
+    { "id": "kcl-series-2", "kind": "kcl", "into": ["l1.current"], "out": ["l2.current"], "tolRel": 1e-6 },
+    { "id": "l1-probe-vs-element", "kind": "kcl", "into": ["l1.current"], "out": ["l1.windingCurrent"], "tolRel": 1e-9 },
+    { "id": "l2-probe-vs-element", "kind": "kcl", "into": ["l2.current"], "out": ["l2.windingCurrent"], "tolRel": 1e-9 },
+    { "id": "l1-law-and-energy", "kind": "storage-law", "part": "l1", "window": [0.0005, 0.006], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "l2-law-and-energy", "kind": "storage-law", "part": "l2", "window": [0.0005, 0.006], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "series-rl-analytic", "kind": "reference", "observable": "l2.current", "model": "first-order-step", "startAtSeconds": 0.001005, "from": 0, "to": 0.5, "tauSeconds": 0.001, "window": [0.0012, 0.006], "tolRel": 0.001 },
+    { "id": "settled-at-end", "kind": "state", "at": "end", "observable": "l2.current", "op": "near", "value": 0.5, "tolAbs": 0.005 }
+  ]
+}

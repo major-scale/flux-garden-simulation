@@ -1,0 +1,7 @@
+{
+  "id": "feedback-heater-cc",
+  "thermal": { "id": "feedback-heater-cc-thermal", "bodies": [ { "id": "plate", "heatCapacityJPerK": 5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0 } ],
+    "routes": [ { "source": "rh", "receiver": "plate" }, { "source": "rs", "receiver": null } ] },
+  "bindings": [ { "part": "rh", "law": "linear", "body": "plate", "rRefOhms": 24, "alphaPerK": 0.004, "tRefK": 293.15, "domainK": [233.15, 473.15] } ],
+  "clock": { "stopSeconds": 100, "stepSeconds": 1, "eventToleranceSeconds": 0.001 }
+}

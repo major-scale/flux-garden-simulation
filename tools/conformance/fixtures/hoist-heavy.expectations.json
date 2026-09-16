@@ -1,0 +1,14 @@
+{
+  "id": "hoist-heavy-v1",
+  "notes": "hoist-lift with a 300 g load. Hand-derived before the first run: tau = 0.3 x 9.80665 x 0.04 = 0.1176798 N m; w_ss = (1.8 - 2.05 x 0.1176798)/0.09205 = 16.934 rad/s; i_ss = (0.016934 + 0.1176798)/0.3 = 0.44871 A; J_eff = 9.8e-4, lag 21.8 ms, theta(0.6) ~ 16.934 x 0.557 = 9.44 rad, height ~ 0.377 m. After release the shaft sags until the current passes tau/K = 0.392 A (about 0.35 ms after the switch conducts) — the graced, reported dip.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "coupled-reference", "kind": "motor-reference", "part": "m", "supplyVolts": 6, "seriesOhms": 0.05, "window": [0.021, 0.6], "braked": false, "tolRel": 0.005 },
+    { "id": "steady-speed", "kind": "state", "at": 0.5, "observable": "m.omega", "op": "near", "value": 16.934, "tolAbs": 0.05 },
+    { "id": "steady-current", "kind": "state", "at": 0.5, "observable": "m.windingCurrent", "op": "near", "value": 0.44871, "tolAbs": 0.002 },
+    { "id": "lifted-at-least", "kind": "state", "at": "end", "observable": "m.height", "op": "gt", "value": 0.36 },
+    { "id": "lifted-at-most", "kind": "state", "at": "end", "observable": "m.height", "op": "lt", "value": 0.40 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m", "graceSeconds": 0.005 }
+  ]
+}

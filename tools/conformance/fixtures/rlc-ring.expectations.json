@@ -1,0 +1,15 @@
+{
+  "id": "rlc-ring-v1",
+  "notes": "Hand-derived before the first run: series R 20 ohm, L 10 mH, C 1 uF, 1 V step at the edge midpoint 0.1005 ms. alpha = R/2L = 1000 /s; omega0^2 = 1/LC = 1e8; omega_d = sqrt(1e8 - 1e6) = 9949.874 rad/s (underdamped, zeta = 0.1). v_C follows the second-order step from 0 to 1. i = (V/(omega_d L)) e^(-alpha t) sin(omega_d t): amplitude 10.05 mA, first reverse lobe about -6.3 mA near 0.57 ms. At 5 ms the envelope is e^(-4.9) ~ 0.0074.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-r-l", "kind": "kcl", "into": ["r.current"], "out": ["l.current"], "tolRel": 1e-6 },
+    { "id": "kcl-l-c", "kind": "kcl", "into": ["l.current"], "out": ["c.current"], "tolRel": 1e-6 },
+    { "id": "capacitor-law-and-energy", "kind": "storage-law", "part": "c", "window": [0.00005, 0.005], "tolRel": 0.001, "tolEnergyRel": 0.002 },
+    { "id": "inductor-law-and-energy", "kind": "storage-law", "part": "l", "window": [0.00005, 0.005], "tolRel": 0.001, "tolEnergyRel": 0.002 },
+    { "id": "ring-analytic", "kind": "reference", "observable": "c.vplus", "model": "second-order-step", "startAtSeconds": 0.0001005, "from": 0, "to": 1, "alphaPerSecond": 1000, "omegaRadPerSecond": 9949.874, "window": [0.00012, 0.005], "tolRel": 0.005 },
+    { "id": "reverse-current", "kind": "trough", "observable": "l.current", "window": [0.0001, 0.0012], "max": -0.002 },
+    { "id": "settled", "kind": "state", "at": "end", "observable": "c.vplus", "op": "near", "value": 1, "tolAbs": 0.02 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 }
+  ]
+}

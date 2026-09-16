@@ -1,0 +1,17 @@
+{
+  "id": "motor-switch-flyback-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "rest-at-start", "kind": "state", "at": 0, "observable": "m.omega", "op": "near", "value": 0, "tolAbs": 1e-6 },
+    { "id": "no-current-at-start", "kind": "state", "at": 0, "observable": "m.current", "op": "near", "value": 0, "tolAbs": 1e-7 },
+    { "id": "kcl-terminal", "kind": "kcl", "into": ["sw.current", "fw.current"], "out": ["m.current"], "tolRel": 1e-6 },
+    { "id": "closes", "kind": "switching", "part": "sw", "direction": "low->high", "window": [0.019, 0.022] },
+    { "id": "opens", "kind": "switching", "part": "sw", "direction": "high->low", "window": [0.299, 0.302] },
+    { "id": "spins-up", "kind": "state", "at": 0.28, "observable": "m.omega", "op": "gt", "value": 10 },
+    { "id": "freewheels", "kind": "peak", "observable": "fw.current", "window": [0.3, 0.302], "min": 0.01 },
+    { "id": "diode-blocks-otherwise", "kind": "bounds", "observable": "fw.current", "min": -1e-6 },
+    { "id": "winding-never-reverses", "kind": "bounds", "observable": "m.windingCurrent", "min": -1e-4 },
+    { "id": "shaft-never-reverses", "kind": "bounds", "observable": "m.omega", "min": -1e-3 },
+    { "id": "coasts-down", "kind": "state", "at": "end", "observable": "m.omega", "op": "lt", "value": 10 }
+  ]
+}

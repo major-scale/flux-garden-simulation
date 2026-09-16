@@ -1,0 +1,14 @@
+{
+  "id": "sensing-ldr-dusk",
+  "sources": [{ "kind": "dc", "name": "vcc", "plus": "vcc", "minus": "0", "volts": 5 }],
+  "environments": [{ "name": "env", "node": "lux", "points": [{ "atSeconds": 0, "value": 100 }, { "atSeconds": 0.2, "value": 100 }, { "atSeconds": 1.2, "value": 2 }, { "atSeconds": 2, "value": 2 }] }],
+  "parts": [
+    { "kind": "resistor", "name": "rf", "ports": { "a": "vcc", "b": "vin" }, "spec": { "ohms": 10000 } },
+    { "kind": "ldr", "name": "s", "ports": { "a": "vin", "b": "0", "env": "lux" }, "spec": { "r10Ohms": 12000, "gamma": 0.7, "darkOhms": 1000000, "luxDomain": [1, 100] } },
+    { "kind": "pot", "name": "p", "ports": { "a": "vcc", "w": "vref", "b": "0" }, "spec": { "totalOhms": 10000, "wiperFraction": 0.5, "endOhms": 0.1, "contactOhms": 0.5 } },
+    { "kind": "comparator", "name": "c", "ports": { "inp": "vin", "inn": "vref", "out": "out", "vcc": "vcc" }, "spec": { "gain": 10000, "rOutOhms": 50, "leakOhms": 1000000, "switch": { "rOnOhms": 0.001, "rOffOhms": 1e9 } } },
+    { "kind": "resistor", "name": "rs", "ports": { "a": "out", "b": "nl" }, "spec": { "ohms": 220 } },
+    { "kind": "led", "name": "l", "ports": { "anode": "nl", "cathode": "0" }, "spec": { "part": { "is": 1e-20, "n": 2, "rs": 1, "cjo": 0, "tt": 0, "bv": 5, "ibv": 1e-6 }, "referenceAmps": 0.02, "maxForwardAmps": 0.03 } }
+  ],
+  "analysis": { "stopSeconds": 2, "stepSeconds": 0.001, "reltol": 0.0001 }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "hoist-locked-v1",
+  "notes": "MECHANICALLY LOCKED SHAFT: the brake is never released. Hand-derived before the first run: omega stays 0 (the brake switch's R_on leaves at most ~1e-7 rad/s); the winding is an LR circuit, i -> V/R_tot = 6/2.05 = 2.92683 A with L/R = 2.44 ms; no back-EMF, so all input becomes winding heat. The brake holds the torque surplus: the torque it APPLIES to the shaft is tau - K i = 0.0392266 - 0.878049 = -0.838822 N m. Distinct from hoist-balanced-hold, where the shaft is FREE and stays still by torque balance.",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "shaft-held", "kind": "bounds", "observable": "m.omega", "min": -1e-6, "max": 1e-6 },
+    { "id": "no-height", "kind": "state", "at": "end", "observable": "m.height", "op": "near", "value": 0, "tolAbs": 1e-6 },
+    { "id": "stall-current", "kind": "state", "at": 0.3, "observable": "m.windingCurrent", "op": "near", "value": 2.92683, "tolAbs": 0.01 },
+    { "id": "brake-holds-surplus", "kind": "state", "at": 0.3, "observable": "m.brakeTorque", "op": "near", "value": -0.838822, "tolAbs": 0.005 },
+    { "id": "braked-reference", "kind": "motor-reference", "part": "m", "supplyVolts": 6, "seriesOhms": 0.05, "window": [0.021, 0.3], "braked": true, "tolRel": 0.005 },
+    { "id": "energy-account", "kind": "energy-balance", "tolRel": 0.001, "tolStorageRel": 0.02 },
+    { "id": "motoring-domain", "kind": "motor-domain", "part": "m" }
+  ]
+}

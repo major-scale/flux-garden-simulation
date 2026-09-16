@@ -1,0 +1,12 @@
+{
+  "id": "rc-design-v1",
+  "checks": [
+    { "id": "connected", "kind": "connectivity", "danglingPorts": "warn" },
+    { "id": "kcl-series", "kind": "kcl", "into": ["r.current"], "out": ["c.current"], "tolRel": 1e-6 },
+    { "id": "ohm-r", "kind": "ohm", "part": "r", "tolRel": 1e-4 },
+    { "id": "capacitor-law-and-energy", "kind": "storage-law", "part": "c", "window": [0.0005, 0.012], "tolRel": 0.001, "tolEnergyRel": 0.001 },
+    { "id": "response-time-tau-2ms", "kind": "reference", "observable": "c.vplus", "model": "first-order-step", "startAtSeconds": 0.001005, "from": 0, "to": 5, "tauSeconds": 0.002, "window": [0.0012, 0.012], "tolRel": 0.02 },
+    { "id": "charging-current-at-most-2mA", "kind": "bounds", "observable": "c.current", "min": -1e-6, "max": 2.0e-3 },
+    { "id": "charged-at-end", "kind": "state", "at": "end", "observable": "c.vplus", "op": "near", "value": 5, "tolAbs": 0.05 }
+  ]
+}

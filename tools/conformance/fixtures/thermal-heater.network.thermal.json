@@ -1,0 +1,13 @@
+{
+  "id": "thermal-heater-network",
+  "bodies": [
+    { "id": "resistor", "heatCapacityJPerK": 0.5, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.01 },
+    { "id": "heatsink", "heatCapacityJPerK": 50, "initialTemperatureK": 293.15, "ambientTemperatureK": 293.15, "conductanceWPerK": 0.5 }
+  ],
+  "links": [
+    { "id": "pad", "a": "resistor", "b": "heatsink", "conductanceWPerK": 2 }
+  ],
+  "routes": [
+    { "source": "rh", "receiver": "resistor" }
+  ]
+}
